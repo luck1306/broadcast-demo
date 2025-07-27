@@ -1,0 +1,50 @@
+/**
+ * originally created by: https://medium.com/@fengliu_367/getting-started-with-webrtc-a-practical-guide-with-example-code-b0f60efdd0a7
+ */
+const app = require("express")();
+const fs = require("fs");
+const path = require("path");
+const server = require("https").createServer(
+    {
+        cert: fs.readFileSync(path.join(__dirname, "./app.pem")),
+        key: fs.readFileSync(path.join(__dirname, "./app-key.pem")),
+    },
+    app
+);
+const debug = require("debug")(`${process.env.APPNAME}:app`);
+const wss = require("./wss");
+
+const HTTPPORT = 4040;
+
+app.use((req, res, next) => {
+    res.setTimeout(30000);
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
+
+wss.init(server);
+
+app.get("/channels", (req, res) => {      
+    res.json({ channels: wss.channels });
+});
+
+app.get("/hostList", (req, res) => {      
+    res.json({ hostList: wss.hostList });
+});
+
+// init the http server on 4040
+server.listen(HTTPPORT, () => {
+    debug(`${process.env.APPNAME} is running on port: ${HTTPPORT}`);
+});
+
+// Graceful shutdown
+process.on("SIGINT", () => {
+    server.close((err) => {
+        if (err) {
+            debug(err);
+            process.exit(1);
+        } else process.exit(0);
+    });
+});
