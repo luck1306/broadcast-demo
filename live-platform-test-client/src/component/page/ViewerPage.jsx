@@ -1,11 +1,19 @@
-import React from "react";
+import BroadcastList from "../common/viewer/BroadcastList";
 
 const ViewerPage = () => {
-    return (
+  return (
     <>
-    <h1>Viewer Page</h1>
-    <p>viewr page</p>
-    </>); 
-}
+      <h1>Welcome! Enjoy Broadcast!</h1>
+      <div className="broadcast-list">
+        <ul>
+          <BroadcastList channelName={"test"}></BroadcastList>
+          {/* <BroadcastList channelName={"calm-down-man"}></BroadcastList>
+          <BroadcastList channelName={"God-Chgang-seop"}></BroadcastList>
+          <BroadcastList channelName={"Faker"}></BroadcastList> */}
+        </ul>
+      </div>
+    </>
+  );
+};
 
 export default ViewerPage;

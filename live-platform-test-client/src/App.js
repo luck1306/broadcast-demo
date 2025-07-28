@@ -6,6 +6,7 @@ import TestWebRtc from "./component/common/testing/TestWebRtc.jsx";
 import RootPage from "./component/page/RootPage.jsx";
 import { useState } from "react";
 import ViewerPage from "./component/page/ViewerPage.jsx";
+import BroadcastViewer from "./component/common/viewer/BroadCastViewer.jsx";
 
 function App() {
   const [isStreamer, setIsStreamer] = useState(false);
@@ -19,7 +20,8 @@ function App() {
           path="/broadcast"
           element={<TestWebRtc isStreamer={isStreamer} />}
         />
-        <Route path="/viewer" element={<ViewerPage />} />
+        <Route path="/broadcast-list" element={<ViewerPage />} />
+        <Route path="/broadcast/:channelName" element={<BroadcastViewer />} />
       </Routes>
     </BrowserRouter>
   );
