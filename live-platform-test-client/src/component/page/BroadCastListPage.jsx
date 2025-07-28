@@ -1,12 +1,14 @@
+import { useRef, useState } from "react";
 import BroadcastList from "../common/viewer/BroadcastList";
 
-const ViewerPage = () => {
+const BroadCastListPage = () => {
+  const userId = useRef(crypto.randomUUID());
   return (
     <>
       <h1>Welcome! Enjoy Broadcast!</h1>
       <div className="broadcast-list">
         <ul>
-          <BroadcastList channelName={"test"}></BroadcastList>
+          <BroadcastList channelName={"test"} userId={userId}></BroadcastList>
           {/* <BroadcastList channelName={"calm-down-man"}></BroadcastList>
           <BroadcastList channelName={"God-Chgang-seop"}></BroadcastList>
           <BroadcastList channelName={"Faker"}></BroadcastList> */}
@@ -16,4 +18,4 @@ const ViewerPage = () => {
   );
 };
 
-export default ViewerPage;
+export default BroadCastListPage;

@@ -194,6 +194,7 @@ const TestWebRtc = (props) => {
             });
           break;
         case "offer_sdp_received": // streamer side
+        console.log(body)
           // console.log(
           //     `channelName is: ${channelName}, type is: ${typeof channelName}`
           // );

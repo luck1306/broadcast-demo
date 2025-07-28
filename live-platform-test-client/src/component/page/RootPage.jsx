@@ -6,7 +6,7 @@ const RootPage = (props) => {
     <>
         <h1>This is MainPage</h1>
         <Link to={"/broadcast"} onClick={() => props.setState(true)}>I'm Streamer</Link><br />
-        <Link to={"/broadcast"} onClick={() => props.setState(false)}>I'm Viewer</Link>
+        <Link to={"/broadcast-list"} onClick={() => props.setState(false)}>I'm Viewer</Link>
     </>
     )
 }

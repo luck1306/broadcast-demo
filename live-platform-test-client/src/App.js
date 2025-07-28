@@ -5,7 +5,7 @@ import "./App.css";
 import TestWebRtc from "./component/common/testing/TestWebRtc.jsx";
 import RootPage from "./component/page/RootPage.jsx";
 import { useState } from "react";
-import ViewerPage from "./component/page/ViewerPage.jsx";
+import ViewerPage from "./component/page/BroadCastListPage.jsx";
 import BroadcastViewer from "./component/common/viewer/BroadCastViewer.jsx";
 
 function App() {
