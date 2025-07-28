@@ -5,6 +5,7 @@ import "./App.css";
 import TestWebRtc from "./component/common/TestWebRtc.jsx";
 import RootPage from "./component/page/RootPage.jsx"
 import { useState } from "react";
+import ViewerPage from "./component/page/ViewerPage.jsx";
 
 function App() {
     const [isStreamer, setIsStreamer] = useState(false);
@@ -15,6 +16,7 @@ function App() {
                 {/* <Socket /> */}
                 <Route path="/" element={<RootPage setState={setIsStreamer} />} />
                 <Route path="/broadcast" element={<TestWebRtc isStreamer={isStreamer} />} />
+                <Route path="/viewer" element={<ViewerPage />} />
             </Routes>
         </BrowserRouter>
     );
