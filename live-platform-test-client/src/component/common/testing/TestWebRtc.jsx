@@ -4,7 +4,7 @@
 
 import { Button, Typography, Input } from "antd";
 import { useEffect, useRef, useState } from "react";
-import UTILS from "../../../library/util/webRtcUtil.js";
+import UTILS from "../../../library/util/testing/webRtcUtil.js";
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -194,7 +194,7 @@ const TestWebRtc = (props) => {
             });
           break;
         case "offer_sdp_received": // streamer side
-        console.log(body)
+          console.log(body);
           // console.log(
           //     `channelName is: ${channelName}, type is: ${typeof channelName}`
           // );
