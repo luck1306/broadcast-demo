@@ -5,7 +5,7 @@ let hostList = {}; /** Object<{ channelName: userId }> */
 function init(server) {
     const wss = new WebSocket({
         server: server,
-        path: "/ws",
+        path: "/signal",
     });
     wss.on("connection", (socket) => {
         // debug("A client has connected!");

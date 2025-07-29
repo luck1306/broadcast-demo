@@ -9,7 +9,7 @@ import UTILS from "../../../library/util/webRtcUtil.js";
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
-const URL_WEB_SOCKET = "wss://192.168.0.11:4040/ws";
+const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
 
 const renderHelper = (props) => {
   return (

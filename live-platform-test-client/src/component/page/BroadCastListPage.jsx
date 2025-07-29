@@ -3,6 +3,7 @@ import BroadcastList from "../common/viewer/BroadcastList";
 
 const BroadCastListPage = () => {
   const userId = useRef(crypto.randomUUID());
+  console.log(process.env.REACT_APP_SIGSERVER)
   return (
     <>
       <h1>Welcome! Enjoy Broadcast!</h1>

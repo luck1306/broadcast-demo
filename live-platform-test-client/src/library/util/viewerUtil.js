@@ -1,7 +1,5 @@
-import UTILS from "./webRtcUtil.js";
-
 /**
- *
+ * default RTCPeerConnecton setting
  * @param {RTCPeerConnection} pc
  * @param {string} channelName
  * @param {string} userId
@@ -14,7 +12,7 @@ const settingViewerPC = (pc, channelName, userId, socket) => {
     iceCandidateOffer(e, { pc, userId, socket, channelName });
   pc.addTransceiver("video", { direction: "recvonly" });
   pc.addTransceiver("audio", { direction: "recvonly" });
-  pc.ontrack = UTILS.gotRemoteStream;
+  pc.ontrack = gotRemoteStream;
   pc.createOffer().then((e) => gotLocalDescription(e, pc));
 };
 
@@ -71,8 +69,17 @@ const gotLocalDescription = (offer, pc) => {
       50
     )}...`
   );
-  
+
   pc?.setLocalDescription(offer);
+};
+
+const gotRemoteStream = (e) => {
+  console.log("gotRemoteStream invoked");
+  const remotePlayer = document.getElementById("peerPlayer");
+  if (remotePlayer instanceof HTMLVideoElement)
+    remotePlayer.srcObject = e.streams[0];
+  else console.log("remotePlayer is not an HTMLVideoElement");
+  remotePlayer.play();
 };
 
 export default {

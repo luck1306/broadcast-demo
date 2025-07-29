@@ -7,8 +7,7 @@ const BroadcastViewer = () => {
   const peerConnection = useRef(new RTCPeerConnection());
   const iceCandidateQueue = useRef([]);
   const { channelName } = useParams();
-  const location = useLocation();
-  const receivedState = location.state;
+  const receivedState = useLocation().state;
   const userId = receivedState.current;
 
   const addCandidate = (cd) => {
@@ -23,7 +22,7 @@ const BroadcastViewer = () => {
   };
 
   useEffect(() => {
-    const signalingSocket = new WebSocket("wss://192.168.0.11:4040/ws");
+    const signalingSocket = new WebSocket(process.env.REACT_APP_SIGSERVER);
     signalingSocket.onopen = () => {
       console.log("WebSocket opened");
       ws.current = signalingSocket;
@@ -79,11 +78,7 @@ const BroadcastViewer = () => {
     <>
       <h1>여긴 {channelName}의 방송입니다.</h1>
       <p>"{userId}"님 반갑습니다!</p>
-      <video
-        id="peerPlayer"
-        style={{ width: 640, height: 480 }}
-        controls
-      ></video>
+      <video id="peerPlayer" style={{ width: 640, height: 480 }}></video>
       <button onClick={() => console.log(peerConnection.current)}>
         rtcpeerconnecton
       </button>
