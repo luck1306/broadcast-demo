@@ -7,6 +7,8 @@ import RootPage from "./component/page/RootPage.jsx";
 import { useState } from "react";
 import ViewerPage from "./component/page/BroadCastListPage.jsx";
 import BroadcastViewer from "./component/common/viewer/BroadCastViewer.jsx";
+import StreamerDashBoard from "./component/common/streamer/StreamerDashBoard.jsx";
+import NotFoundPage from "./component/page/NotFoundPage.jsx";
 
 function App() {
   const [isStreamer, setIsStreamer] = useState(false);
@@ -22,6 +24,8 @@ function App() {
         />
         <Route path="/broadcast-list" element={<ViewerPage />} />
         <Route path="/broadcast/:channelName" element={<BroadcastViewer />} />
+        <Route path="/broadcast-dashboard" element={<StreamerDashBoard />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
