@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import streamerUtil from "../../../library/util/streamerUtil";
+
+const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
 
 const StreamerDashBoard = () => {
   const [userId, setUserId] = useState("");
@@ -6,48 +9,61 @@ const StreamerDashBoard = () => {
   const [userInfoConfirmed, setUserInfoConfirmed] = useState(false);
   const [confirmBtnDisabled, setConfirmBtnDisabled] = useState(true);
   const [startBtnDisabled, setStartBtnDisabled] = useState(true);
+
   const mediaStream = useRef(null);
+  const ws = useRef(null);
+  const pcs = useRef({});
+
+  useEffect(() => {
+    const wsClient = new WebSocket(URL_WEB_SOCKET);
+
+    wsClient.onopen = () => {
+      console.log("WebSocket opened");
+      ws.current = wsClient;
+    };
+
+    wsClient.onclose = () => console.log("WebSocket closed");
+
+    wsClient.onmessage = (msg) => {
+      const parsedMessage = JSON.parse(msg.data);
+      console.log(`WebSocket message received: ${parsedMessage.type}`);
+      const body = parsedMessage.body;
+      switch (parsedMessage.type) {
+        case "joined": {
+          console.log("User enter channel " + channelName);
+          break;
+        }
+        case "offer_sdp_received": {
+          const pc = new RTCPeerConnection();
+          streamerUtil.PCInit({
+            pc,
+            ws: wsClient,
+            channelName,
+            userId,
+            sender: body.sender,
+            sdp: body.sdp,
+          });
+          pcs.current.set(body.sender, pc);
+          break;
+        }
+        case "ice_candidate_received": {
+          break;
+        }
+        default:
+          break;
+      }
+    };
+
+    return () => {
+      wsClient.close();
+      ws.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     if (userId === "" || channelName === "") return;
     setConfirmBtnDisabled(false);
   }, [userId, channelName]);
-
-  const userInfoConfirm = () => {
-    const confirmed = window.confirm("Confirm your user information?");
-    if (confirmed) {
-      const inputs = document.getElementsByClassName("streamer-input");
-      for (const i of inputs) i.disabled = true;
-      getStream();
-      setStartBtnDisabled(false);
-      setUserInfoConfirmed(true);
-    } else {
-      window.alert("not confirmed");
-      setUserId("");
-      setChannelName("");
-    }
-  };
-
-  const getStream = async () => {
-    mediaStream.current = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      // audio: true,
-    });
-    const video = document.getElementById("streamed-video");
-    video.srcObject = mediaStream.current;
-    video.play();
-  };
-
-  const userInfoInit = () => {
-    setUserInfoConfirmed(false);
-    setStartBtnDisabled(true);
-    const video = document.getElementById("streamed-video");
-    video.srcObject = null;
-    video.load();
-    mediaStream.current = null;
-    const inputs = document.getElementsByClassName("streamer-input");
-    for (const i of inputs) i.disabled = false;
-  };
 
   return (
     <div className="container">
@@ -75,8 +91,19 @@ const StreamerDashBoard = () => {
         <button
           disabled={confirmBtnDisabled}
           onClick={() => {
-            if (userInfoConfirmed) userInfoInit();
-            else userInfoConfirm();
+            if (userInfoConfirmed)
+              streamerUtil.userInfoInit({
+                setUserInfoConfirmed,
+                setStartBtnDisabled,
+                mediaStream: mediaStream.current,
+              });
+            else
+              streamerUtil.userInfoConfirm({
+                setStartBtnDisabled,
+                setUserInfoConfirmed,
+                setUserId,
+                setChannelName,
+              });
           }}
         >
           {userInfoConfirmed ? "Cancel" : "Confirm"}

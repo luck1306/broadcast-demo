@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import viewerUtil from "../../../library/util/viewerUtil";
 
+const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
+
 const BroadcastViewer = () => {
   const ws = useRef(null);
   const peerConnection = useRef(new RTCPeerConnection());
@@ -22,7 +24,7 @@ const BroadcastViewer = () => {
   };
 
   useEffect(() => {
-    const signalingSocket = new WebSocket(process.env.REACT_APP_SIGSERVER);
+    const signalingSocket = new WebSocket(URL_WEB_SOCKET);
     signalingSocket.onopen = () => {
       console.log("WebSocket opened");
       ws.current = signalingSocket;
