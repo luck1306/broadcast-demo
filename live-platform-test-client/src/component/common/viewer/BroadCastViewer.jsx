@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import viewerUtil from "../../../library/util/viewerUtil";
 
 const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
 
 const BroadcastViewer = () => {
+  const [muted, setMuted] = useState(true);
   const ws = useRef(null);
   const peerConnection = useRef(new RTCPeerConnection());
   const iceCandidateQueue = useRef([]);
@@ -80,20 +81,16 @@ const BroadcastViewer = () => {
     <>
       <h1>여긴 {channelName}의 방송입니다.</h1>
       <p>"{userId}"님 반갑습니다!</p>
-      <video id="peerPlayer" style={{ width: 640, height: 480 }}></video>
+      <video
+        id="peerPlayer"
+        style={{ width: 640, height: 480 }}
+        muted={muted}
+        autoPlay
+      ></video>
       <button onClick={() => console.log(peerConnection.current)}>
         rtcpeerconnecton
       </button>
-      <button
-        onClick={() => {
-          const video = document.getElementById("peerPlayer").play();
-          if (video !== undefined) {
-            video.then((_) => {}).catch(console.error);
-          }
-        }}
-      >
-        play
-      </button>
+      <button onClick={() => setMuted(false)}>sound enable</button>
     </>
   );
 };
