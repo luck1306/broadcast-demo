@@ -84,6 +84,16 @@ const BroadcastViewer = () => {
       <button onClick={() => console.log(peerConnection.current)}>
         rtcpeerconnecton
       </button>
+      <button
+        onClick={() => {
+          const video = document.getElementById("peerPlayer").play();
+          if (video !== undefined) {
+            video.then((_) => {}).catch(console.error);
+          }
+        }}
+      >
+        play
+      </button>
     </>
   );
 };

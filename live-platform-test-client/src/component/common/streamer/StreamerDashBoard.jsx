@@ -7,12 +7,13 @@ const StreamerDashBoard = () => {
   const [userId, setUserId] = useState("");
   const [channelName, setChannelName] = useState("");
   const [userInfoConfirmed, setUserInfoConfirmed] = useState(false);
+  const [assignedAtWs, setAssignedAtWs] = useState(false);
   const [confirmBtnDisabled, setConfirmBtnDisabled] = useState(true);
   const [startBtnDisabled, setStartBtnDisabled] = useState(true);
 
   const mediaStream = useRef(null);
   const ws = useRef(null);
-  const pcs = useRef({});
+  const pcs = useRef(new Map());
 
   useEffect(() => {
     const wsClient = new WebSocket(URL_WEB_SOCKET);
@@ -20,28 +21,41 @@ const StreamerDashBoard = () => {
     wsClient.onopen = () => {
       console.log("WebSocket opened");
       ws.current = wsClient;
+      if (ws.current != null) setAssignedAtWs(true);
     };
 
     wsClient.onclose = () => console.log("WebSocket closed");
 
-    wsClient.onmessage = (msg) => {
+    return () => {
+      wsClient.close();
+      ws.current = null;
+      setAssignedAtWs(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (userId === "" || channelName === "") return;
+    if (!assignedAtWs) return;
+    setConfirmBtnDisabled(false);
+    ws.current.onmessage = (msg) => {
       const parsedMessage = JSON.parse(msg.data);
       console.log(`WebSocket message received: ${parsedMessage.type}`);
       const body = parsedMessage.body;
       switch (parsedMessage.type) {
         case "joined": {
-          console.log("User enter channel " + channelName);
+          // console.log(`User enter channel ${channelName}`);
           break;
         }
         case "offer_sdp_received": {
           const pc = new RTCPeerConnection();
           streamerUtil.PCInit({
             pc,
-            ws: wsClient,
+            ws: ws.current,
             channelName,
             userId,
             sender: body.sender,
             sdp: body.sdp,
+            mediaStream: mediaStream.current,
           });
           pcs.current.set(body.sender, pc);
           break;
@@ -53,16 +67,6 @@ const StreamerDashBoard = () => {
           break;
       }
     };
-
-    return () => {
-      wsClient.close();
-      ws.current = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (userId === "" || channelName === "") return;
-    setConfirmBtnDisabled(false);
   }, [userId, channelName]);
 
   return (
@@ -103,18 +107,29 @@ const StreamerDashBoard = () => {
                 setUserInfoConfirmed,
                 setUserId,
                 setChannelName,
+                mediaStream,
               });
           }}
         >
           {userInfoConfirmed ? "Cancel" : "Confirm"}
         </button>
-        <button disabled={startBtnDisabled}>Streaming Start !!!</button>
+        <button
+          disabled={startBtnDisabled}
+          onClick={() =>
+            streamerUtil.joinInWs({ ws: ws.current, channelName, userId })
+          }
+        >
+          Streaming Start !!!
+        </button>
         <br />
         <video
           id="streamed-video"
           style={{ width: 640, height: 480, border: "black solid 1px" }}
         ></video>
         {/* <button onClick={() => console.log(mediaStream)}>MediaStream</button> */}
+        <button onClick={() => console.log(`${channelName} ${userId}`)}>
+          asdf
+        </button>
       </div>
     </div>
   );

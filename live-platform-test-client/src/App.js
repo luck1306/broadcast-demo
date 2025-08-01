@@ -24,7 +24,7 @@ function App() {
         />
         <Route path="/broadcast-list" element={<ViewerPage />} />
         <Route path="/broadcast/:channelName" element={<BroadcastViewer />} />
-        <Route path="/broadcast-dashboard" element={<StreamerDashBoard />} />
+        <Route path="/dashboard" element={<StreamerDashBoard />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

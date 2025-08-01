@@ -1,10 +1,9 @@
-const PCInit = (props) => {
+const PCInit = async (props) => {
   console.log("PCInit invoked");
   props.pc.onicecandidate = (e) => {
     console.log("setting about [icecandidate] event in RTCPeerConnection");
     const answer = props.pc?.localDescription;
 
-    props.pc.setRemoteDescription(props.sdp);
     props.ws.send(
       JSON.stringify({
         type: "send_ice_candidate",
@@ -18,17 +17,22 @@ const PCInit = (props) => {
       })
     );
   };
+  props.mediaStream.getTracks().forEach((track) => {
+    props.pc.addTrack(track);
+  });
+  await props.pc.setRemoteDescription(props.sdp);
   props.pc
     .createAnswer()
     .then((result) => props.pc.setLocalDescription(result));
 };
 
 const userInfoConfirm = (props) => {
+  console.log("userInfoConfirm invoked");
   const confirmed = window.confirm("Confirm your user information?");
   if (confirmed) {
     const inputs = document.getElementsByClassName("streamer-input");
     for (const i of inputs) i.disabled = true;
-    getStream();
+    getStream(props.mediaStream);
     props.setStartBtnDisabled(false);
     props.setUserInfoConfirmed(true);
   } else {
@@ -38,7 +42,8 @@ const userInfoConfirm = (props) => {
   }
 };
 
-const getStream = async () => {
+const getStream = async (mediaStream) => {
+  console.log("getStraem invoked");
   mediaStream.current = await navigator.mediaDevices.getUserMedia({
     video: true,
     // audio: true,
@@ -49,6 +54,7 @@ const getStream = async () => {
 };
 
 const userInfoInit = (props) => {
+  console.log("userInfoInit invoked");
   props.setUserInfoConfirmed(false);
   props.setStartBtnDisabled(true);
   const video = document.getElementById("streamed-video");
@@ -59,9 +65,23 @@ const userInfoInit = (props) => {
   for (const i of inputs) i.disabled = false;
 };
 
+const joinInWs = (props) => {
+  console.log("joinInWs invoked");
+  props.ws.send(
+    JSON.stringify({
+      type: "join",
+      body: {
+        channelName: props.channelName,
+        userId: props.userId,
+      },
+    })
+  );
+};
+
 export default {
   PCInit,
   userInfoConfirm,
   getStream,
   userInfoInit,
+  joinInWs,
 };
