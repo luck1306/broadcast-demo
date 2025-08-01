@@ -63,7 +63,7 @@ const contraints = {
     height: { min: 480, ideal: 720, max: 1080 },
     frameRate: { min: 15, ideal: 30, max: 60 },
   },
-  // audio: true,
+  audio: true,
 };
 
 const candidateQueue = [];

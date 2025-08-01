@@ -1,8 +1,8 @@
 const PCInit = async (props) => {
   console.log("PCInit invoked");
   props.pc.onicecandidate = (e) => {
-    console.log("setting about [icecandidate] event in RTCPeerConnection");
     const answer = props.pc?.localDescription;
+    console.log(`gotLocalIceCandidateAnswer invoked: ${e.candidate} ${answer}`);
 
     props.ws.send(
       JSON.stringify({
@@ -10,14 +10,28 @@ const PCInit = async (props) => {
         body: {
           channelName: props.channelName,
           userId: props.userId,
-          candidate: e.candiate,
-          sdp: answer,
+          candidate: e.candidate,
           sender: props.sender,
         },
       })
     );
+
+    if (e.candidate === null || e.candidate === "") {
+      props.ws.send(
+        JSON.stringify({
+          type: "send_answer",
+          body: {
+            channelName: props.channelName,
+            userId: props.userId,
+            sdp: answer,
+            sender: props.sender,
+          },
+        })
+      );
+    }
   };
   props.mediaStream.getTracks().forEach((track) => {
+    console.log("addtrack");
     props.pc.addTrack(track);
   });
   await props.pc.setRemoteDescription(props.sdp);
@@ -46,7 +60,7 @@ const getStream = async (mediaStream) => {
   console.log("getStraem invoked");
   mediaStream.current = await navigator.mediaDevices.getUserMedia({
     video: true,
-    // audio: true,
+    audio: true,
   });
   const video = document.getElementById("streamed-video");
   video.srcObject = mediaStream.current;

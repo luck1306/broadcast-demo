@@ -75,11 +75,12 @@ const gotLocalDescription = (offer, pc) => {
 
 const gotRemoteStream = (e) => {
   console.log("gotRemoteStream invoked");
+  console.log(e);
   const remotePlayer = document.getElementById("peerPlayer");
-  if (remotePlayer instanceof HTMLVideoElement)
+  if (remotePlayer instanceof HTMLVideoElement) {
     remotePlayer.srcObject = e.streams[0];
-  else console.log("remotePlayer is not an HTMLVideoElement");
-  remotePlayer.play();
+  } else console.log("remotePlayer is not an HTMLVideoElement");
+  // remotePlayer.play();
 };
 
 export default {
