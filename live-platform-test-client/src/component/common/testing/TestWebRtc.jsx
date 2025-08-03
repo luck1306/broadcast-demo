@@ -223,7 +223,7 @@ const TestWebRtc = (props) => {
           break;
         case "ice_candidate_received":
           console.log("ice candidate received at remote peer");
-          UTILS.addCandidate(body);
+          UTILS.addCandidate(body.candidate);
           break;
         case "quit":
           break;

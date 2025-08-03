@@ -26,11 +26,11 @@ app.use((req, res, next) => {
 
 wss.init(server);
 
-app.get("/channels", (req, res) => {      
+app.get("/channels", (req, res) => {
     res.json({ channels: wss.channels });
 });
 
-app.get("/hostList", (req, res) => {      
+app.get("/hostList", (req, res) => {
     res.json({ hostList: wss.hostList });
 });
 

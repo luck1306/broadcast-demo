@@ -11,7 +11,7 @@ const settingViewerPC = (pc, channelName, userId, socket) => {
   pc.onicecandidate = (e) =>
     iceCandidateOffer(e, { pc, userId, socket, channelName });
   pc.addTransceiver("video", { direction: "recvonly" });
-  pc.addTransceiver("audio", { direction: "recvonly" });
+  // pc.addTransceiver("audio", { direction: "recvonly" });
   pc.ontrack = gotRemoteStream;
   pc.createOffer().then((e) => gotLocalDescription(e, pc));
 };
@@ -80,7 +80,7 @@ const gotRemoteStream = (e) => {
   if (remotePlayer instanceof HTMLVideoElement) {
     remotePlayer.srcObject = e.streams[0];
   } else console.log("remotePlayer is not an HTMLVideoElement");
-  // remotePlayer.play();
+  remotePlayer.play();
 };
 
 export default {
