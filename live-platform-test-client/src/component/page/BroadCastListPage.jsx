@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import BroadcastList from "../common/viewer/BroadcastList";
+import BroadcastList from "../common/viewer/BroadcastListElement";
 
 const BroadCastListPage = () => {
   const userId = useRef(crypto.randomUUID());
