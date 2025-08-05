@@ -78,6 +78,16 @@ const BroadcastViewer = () => {
                     addCandidate(body);
                     break;
                 }
+                case "quit": {
+                    window.alert("User quit channel " + channelName);
+                    signalingSocket.close();
+                    ws.current = null;
+                    peerConnection.current.close();
+                    peerConnection.current = new RTCPeerConnection();
+                    iceCandidateQueue.current = [];
+                    window.location.href = "/broadcast-list";
+                    break;
+                }
                 default:
                     break;
             }
