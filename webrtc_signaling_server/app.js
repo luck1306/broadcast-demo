@@ -27,7 +27,13 @@ app.use((req, res, next) => {
 wss.init(server);
 
 app.get("/channels", (req, res) => {
-    res.json({ channels: wss.channels });
+    const response = {
+        channels: Object.keys(wss.channels).map((channelName) => ({
+            channelName,
+            users: Object.keys(wss.channels[channelName]),
+        })),
+    };
+    res.json(response);
 });
 
 app.get("/hostList", (req, res) => {
