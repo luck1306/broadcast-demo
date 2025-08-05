@@ -75,8 +75,8 @@ const userInfoInit = (props) => {
     props.setUserInfoConfirmed(false);
     props.setStartBtnDisabled(true);
     const video = document.getElementById("streamed-video");
-    video.srcObject = null;
-    video.load();
+    // video.srcObject = null;
+    video?.load();
     props.mediaStream = null;
     const inputs = document.getElementsByClassName("streamer-input");
     for (const i of inputs) i.disabled = false;
