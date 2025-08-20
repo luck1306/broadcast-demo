@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 });
 
 signaling.init(server);
+chatting.execute(server);
 
 app.get("/channels", (req, res) => {
     const response = {

@@ -1,5 +1,5 @@
 const WebSocket = require("ws").Server;
-// < channelname: string, < username: string, WebSocket: ws > >
+// Map<channelname: string, Array<WebSocket: ws>>
 const channelInfo = new Map();
 
 const execute = (server) => {
@@ -8,14 +8,38 @@ const execute = (server) => {
         path: "/chatting",
     });
     wss.on("connection", (ws) => {
-        ws.on("open", () => {});
-        ws.on("close", () => {});
-        ws.on("message", (msg) => messageHandler(msg));
+        ws.on("close", () => closeHandle(ws));
+        ws.on("message", (msg) => messageHandler(ws, JSON.parse(msg)));
     });
 };
 
-const messageHandler = (data) => {
-    const parsedMessage = JSON.parse(data);
+/**
+ * signaling server 접속 시... channelName & userId
+ */
+const messageHandler = (socket, data) => {
+    const type = data.type; // "E"(nter), "C"(ommon)
+    const cname = data.channelName;
+    const name = data.userId;
+    const body = data.body;
+
+    // db에 채팅 추가하는 로직 추가 예정
+
+    if (type === "C") {
+        const channelEleArr = channelInfo[cname];
+        channelEleArr.forEach((element) => {
+            element.send(JSON.stringify());
+        });
+    } else if (type === "E") {
+        channelInfo[cname].push(socket);
+    }
+};
+
+const closeHandle = (socket) => {
+    channelInfo.forEach((cname) => {
+        cname.forEach((e) => {
+            if (e == socket) e.close();
+        });
+    });
 };
 
 module.exports = {
