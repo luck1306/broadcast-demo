@@ -12,7 +12,8 @@ const server = require("https").createServer(
     app
 );
 const debug = require("debug")(`${process.env.APPNAME}:app`);
-const wss = require("./wss");
+const signaling = require("./signaling");
+const chatting = require("./chatting");
 
 const HTTPPORT = 4040;
 
@@ -24,20 +25,20 @@ app.use((req, res, next) => {
     next();
 });
 
-wss.init(server);
+signaling.init(server);
 
 app.get("/channels", (req, res) => {
     const response = {
-        channels: Object.keys(wss.channels).map((channelName) => ({
+        channels: Object.keys(signaling.channels).map((channelName) => ({
             channelName,
-            users: Object.keys(wss.channels[channelName]),
+            users: Object.keys(signaling.channels[channelName]),
         })),
     };
     res.json(response);
 });
 
 app.get("/hostList", (req, res) => {
-    res.json({ hostList: wss.hostList });
+    res.json({ hostList: signaling.hostList });
 });
 
 // init the http server on 4040
