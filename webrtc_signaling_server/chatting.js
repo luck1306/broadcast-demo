@@ -21,13 +21,20 @@ const messageHandler = (socket, data) => {
     const cname = data.channelName;
     const name = data.userId;
     const body = data.body;
-
+    console.log(
+        `messageHandler: type=${type}, channelName=${cname}, userId=${name}, body=${body}`
+    );
     // db에 채팅 추가하는 로직 추가 예정
 
     if (type === "C") {
         const channelEleArr = channelInfo[cname];
         channelEleArr.forEach((element) => {
-            element.send(JSON.stringify());
+            element.send(
+                JSON.stringify({
+                    name,
+                    body,
+                })
+            );
         });
     } else if (type === "E") {
         channelInfo[cname].push(socket);
