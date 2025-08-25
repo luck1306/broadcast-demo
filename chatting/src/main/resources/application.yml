@@ -1,0 +1,14 @@
+spring:
+    application:
+        name: chatting
+    datasource:
+        username: ${MYSQL_USERNAME}
+        password: ${MYSQL_PASSWORD}
+        url: ${MYSQL_URL}
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        database: mysql
+        database-platform: org.hibernate.dialect.MySQLDialect
+        hibernate:
+            ddl-auto: update
+        generate-ddl: true
