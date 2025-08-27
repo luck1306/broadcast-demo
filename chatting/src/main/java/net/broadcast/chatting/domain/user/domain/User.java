@@ -2,6 +2,7 @@ package net.broadcast.chatting.domain.user.domain;
 
 import java.util.Collection;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,11 @@ import net.broadcast.chatting.domain.user.domain.type.UserRole;
 @lombok.Getter
 @lombok.NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @jakarta.persistence.AttributeOverride(name = "id", column = @Column(name = "user_id"))
+@DynamicInsert
 @jakarta.persistence.Entity
 public class User extends net.broadcast.chatting.global.entity.BaseEntity implements UserDetails {
 
-    @Column(length = 16)
+    @Column(nullable = false, length = 16)
     String nickname;
 
     @Column(nullable = false, unique = true, length = 20)

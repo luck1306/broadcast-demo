@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
+import net.broadcast.chatting.domain.user.exception.AlreadyNicknameExistException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class UserService {
         String password
     ) {
         if(userRepository.existsByAccountId(accountId)) {
-            throw new IllegalArgumentException("Already Exists AccountId");
+            throw AlreadyNicknameExistException.EXCEPTION;
         }
         User user = User.builder()
             .nickname(nickname)

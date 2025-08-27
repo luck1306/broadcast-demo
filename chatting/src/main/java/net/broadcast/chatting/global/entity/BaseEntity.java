@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
@@ -32,7 +31,6 @@ public abstract class BaseEntity {
     @Column(updatable = false, nullable = false)
     LocalDateTime createdAt;
 
-    @LastModifiedBy
-    @Column(nullable = false)
+    @Column(columnDefinition = "DATETIME ON UPDATE CURRENT_TIMESTAMP()")
     LocalDateTime updatedAt;
 }
