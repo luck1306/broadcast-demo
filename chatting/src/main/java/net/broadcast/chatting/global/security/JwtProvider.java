@@ -4,13 +4,10 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Decoders;
 import jakarta.annotation.PostConstruct;
 
-@Component
 public class JwtProvider {
     
     SecretKey secretKey;

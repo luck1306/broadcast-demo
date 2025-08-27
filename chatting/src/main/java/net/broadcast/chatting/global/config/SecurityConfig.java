@@ -11,11 +11,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
+import net.broadcast.chatting.global.security.JwtFilter;
+import net.broadcast.chatting.global.security.JwtProvider;
+import net.broadcast.chatting.global.util.SecurityUtil;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    final JwtProvider provider = new JwtProvider();
+    final SecurityUtil util;
+
     @Bean
     PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
@@ -28,6 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
+                .addFilterBefore(new JwtFilter(provider, util), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
