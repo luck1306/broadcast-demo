@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Profile ###
+*-local.yml
+*-local.properties
+*-dev.yml
+*-dev.properties
+*-prod.yml
+*-prod.properties
