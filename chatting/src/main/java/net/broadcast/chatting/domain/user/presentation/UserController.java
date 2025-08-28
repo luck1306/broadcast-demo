@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import net.broadcast.chatting.domain.user.presentation.dto.request.SignInRequest;
 import net.broadcast.chatting.domain.user.presentation.dto.request.SignUpRequest;
+import net.broadcast.chatting.domain.user.presentation.dto.response.SignInResponse;
 import net.broadcast.chatting.domain.user.service.UserService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public String signIn(@RequestBody String entity) {
-        return entity;
+    public SignInResponse signIn(@RequestBody SignInRequest req) {
+        return service.signIn(req.getAccountId(), req.getPassword());
     }
     
 }

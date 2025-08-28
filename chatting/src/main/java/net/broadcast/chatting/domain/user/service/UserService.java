@@ -7,6 +7,11 @@ import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
 import net.broadcast.chatting.domain.user.exception.AlreadyNicknameExistException;
+import net.broadcast.chatting.domain.user.exception.NoSuchUserException;
+import net.broadcast.chatting.domain.user.exception.PasswordIsWrongException;
+import net.broadcast.chatting.domain.user.presentation.dto.response.SignInResponse;
+import net.broadcast.chatting.global.properties.JwtProperty;
+import net.broadcast.chatting.global.security.JwtProvider;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +19,8 @@ public class UserService {
 
     final UserRepository userRepository;
     final PasswordEncoder passwordEncoder;
+    final JwtProvider jwtProvider;
+    final JwtProperty jwtProperty;
     
     public void signUp(
         String nickname,
@@ -30,7 +37,22 @@ public class UserService {
             .build();
         userRepository.save(user);
     }
-    public void signIn() {
-
+    public SignInResponse signIn(
+        String accountId,
+        String password
+    ) {
+        User user = userRepository.findByAccountId(accountId).orElseThrow(() -> NoSuchUserException.EXCEPTION);
+        if(!passwordEncoder.matches(password, user.getPassword())) {
+            throw PasswordIsWrongException.EXCEPTION;
+        }
+        
+        String subject = user.getId().toString();
+        String accessToken = jwtProvider.generateToken(subject, jwtProperty.getAccessExpirationMinutes());
+        String refreshToken = jwtProvider.generateToken(subject, jwtProperty.getRefreshExpirationMinutes());
+        
+        return SignInResponse.builder()
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .build();
     }
 }
