@@ -6,7 +6,9 @@ import lombok.Getter;
 public enum ErrorCode {
     ALREADY_EXIST_NICKNAME("이미 존재하는 닉네임입니다.", 400),
     PASSWORD_IS_WRONG("비밀번호가 틀렸습니다.", 400),
-    NO_SUCH_USER("존재하지 않는 유저입니다.", 404);
+    NO_SUCH_USER("존재하지 않는 유저입니다.", 404),
+    BAD_REQUEST_TOKEN_TYPE("잘못된 토큰 타입입니다.", 400),
+    DIFFERENT_TOKEN("저장된 값과 다른 Refresh 토큰입니다.", 401);
 
 
     final String message;

@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
+import net.broadcast.chatting.domain.user.exception.NoSuchUserException;
 
 @Getter
 @Component
@@ -21,7 +22,7 @@ public class SecurityUtil {
     
     public Authentication generateAuthentication(UUID userid) {
         User pricinpal = userRepository.findById(userid)
-            .orElseThrow(() -> new IllegalArgumentException("No User"));
+            .orElseThrow(() -> NoSuchUserException.EXCEPTION);
         return new UsernamePasswordAuthenticationToken(
             (UserDetails) pricinpal, 
             null, 

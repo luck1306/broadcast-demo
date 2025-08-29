@@ -4,17 +4,24 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.stereotype.Component;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.io.Decoders;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import net.broadcast.chatting.global.properties.JwtProperty;
 
+@RequiredArgsConstructor
+@Component
 public class JwtProvider {
     
     SecretKey secretKey;
+    final JwtProperty jwtProperty;
 
     @PostConstruct
     void init() {
-        secretKey = io.jsonwebtoken.security.Keys.hmacShaKeyFor(Decoders.BASE64.decode("bW9ja3NlY3JldGtleW1vY2tzZWNyZXRrZXltb2Nrc2VjcmV0a2V5"));
+        secretKey = io.jsonwebtoken.security.Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtProperty.getSecret()));
     }
 
     public String generateToken(String subject, long expire) {

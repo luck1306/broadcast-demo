@@ -20,7 +20,7 @@ import net.broadcast.chatting.global.util.SecurityUtil;
 @Configuration
 public class SecurityConfig {
 
-    final JwtProvider provider = new JwtProvider();
+    final JwtProvider provider;
     final SecurityUtil util;
 
     @Bean

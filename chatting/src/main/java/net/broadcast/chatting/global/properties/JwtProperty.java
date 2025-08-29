@@ -16,6 +16,8 @@ public class JwtProperty {
     String tokenPrefix;
     String headerString;
     String cookieString;
+    public static String ACCESS = "access";
+    public static String REFRESH = "refresh";
 
     public JwtProperty(
         String secret,
