@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToOne;
+import net.broadcast.chatting.domain.channel.domain.Channel;
 import net.broadcast.chatting.domain.user.domain.type.UserRole;
 
 @lombok.Getter
@@ -30,6 +32,9 @@ public class User extends net.broadcast.chatting.global.entity.BaseEntity implem
     @Column(nullable = false)
     @Enumerated(jakarta.persistence.EnumType.STRING)
     UserRole userRole;
+
+    @OneToOne(mappedBy = "user", orphanRemoval = true)
+    Channel channel;
 
     @lombok.Builder
     public User(
