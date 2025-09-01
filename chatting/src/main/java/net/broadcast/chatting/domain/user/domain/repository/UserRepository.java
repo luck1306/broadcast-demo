@@ -10,5 +10,6 @@ public interface UserRepository extends org.springframework.data.jpa.repository.
     boolean existsByAccountId(String accountId);
 
     Optional<User> findByAccountId(String accountId);
+    Optional<User> findByNickname(String nickname);
     
 }
