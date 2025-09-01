@@ -16,7 +16,7 @@ public class WSSecurityConfig {
         return messages
             .nullDestMatcher().permitAll() // nullDestMatcher: destination이 null인 경우
             .simpDestMatchers("/app/**").permitAll() // 클라이언트가 메시지를 보낼 때 붙이는 prefix
-            .simpSubscribeDestMatchers("/sub/**").permitAll() // broker가 해당 prefix를
+            .simpSubscribeDestMatchers("/sub/**").permitAll() // broker가 해당 prefix를 붙여서 구독자에게 메시지를 보냄
             .anyMessage().denyAll()
             .build();
     }

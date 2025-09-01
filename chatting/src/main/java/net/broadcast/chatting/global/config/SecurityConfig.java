@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/", "/users/**").permitAll()
+                    .requestMatchers("/", "/users/**", "/chatting").permitAll()
                     .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtFilter(provider, util), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
