@@ -1,17 +1,20 @@
 package net.broadcast.chatting.domain.channel.presentation;
 
+import org.springframework.http.HttpStatus;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import net.broadcast.chatting.domain.channel.presentation.dto.request.ChannelInfoRequest;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelInfoResponse;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RequiredArgsConstructor
 @RequestMapping("/channels")
@@ -33,6 +36,12 @@ public class ChannelController {
     @GetMapping("/search/{channelName}")
     public ChannelInfoResponse searchByChannelName(@PathVariable String channelName) {
         return channelService.searchByChannelName(channelName);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/create")
+    public void createChannel(@RequestBody ChannelInfoRequest request) {
+        channelService.createChannel(request);
     }
     
 }

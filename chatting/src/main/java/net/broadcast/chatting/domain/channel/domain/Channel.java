@@ -26,9 +26,11 @@ public class Channel extends net.broadcast.chatting.global.entity.BaseEntity {
     @lombok.Builder
     public Channel(
         String channelName,
-        boolean liveStatus
+        boolean liveStatus,
+        User user
     ) {
         this.channelName = channelName;
         this.liveStatus = liveStatus;
+        this.user = user;
     }
 }
