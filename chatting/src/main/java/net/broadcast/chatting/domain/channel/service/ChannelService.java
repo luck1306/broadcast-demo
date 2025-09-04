@@ -59,7 +59,7 @@ public class ChannelService {
 
     public void notStreamStat() {
         UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userRepository.findById(UUID.fromString(details.getUsername())).orElseThrow(() -> NoSuchUserException.EXCEPTION);
+        User user = userRepository.findByNickname(details.getUsername()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
         Channel channel = channelRepository.findByUser(user).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
         channelRepository.save(channel.switchStat());
     }
