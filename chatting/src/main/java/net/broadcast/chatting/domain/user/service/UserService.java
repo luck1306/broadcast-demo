@@ -1,5 +1,7 @@
 package net.broadcast.chatting.domain.user.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import net.broadcast.chatting.domain.user.exception.AlreadyNicknameExistExceptio
 import net.broadcast.chatting.domain.user.exception.BadRequestTokenTypeException;
 import net.broadcast.chatting.domain.user.exception.DifferentTokenException;
 import net.broadcast.chatting.domain.user.exception.NoSuchUserException;
+import net.broadcast.chatting.domain.user.exception.NotLoginCurrentException;
 import net.broadcast.chatting.domain.user.exception.PasswordIsWrongException;
 import net.broadcast.chatting.domain.user.presentation.dto.response.SignInResponse;
 import net.broadcast.chatting.global.properties.JwtProperty;
@@ -92,5 +95,14 @@ public class UserService {
             .accessToken(newAccessToken)
             .refreshToken(newRefreshToken)
             .build();
+    }
+
+    public void logout() {
+        UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String subject = userRepository.findByNickname(details.getUsername())
+            .orElseThrow(() -> NoSuchUserException.EXCEPTION)
+            .getId().toString();
+        if(RedisUtil.get(subject) == null) throw NotLoginCurrentException.EXCPETION;
+        RedisUtil.removeByKey(subject);
     }
 }

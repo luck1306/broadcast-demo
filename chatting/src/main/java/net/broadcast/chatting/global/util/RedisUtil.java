@@ -23,4 +23,8 @@ public class RedisUtil {
     RedisUtil(RedisTemplate<String, Object> redisTemplate) {
         RedisUtil.redisTemplate = redisTemplate;
     }
+
+    public static void removeByKey(String key) {
+        redisTemplate.delete(key);
+    }
 }
