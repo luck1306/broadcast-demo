@@ -33,4 +33,9 @@ public class Channel extends net.broadcast.chatting.global.entity.BaseEntity {
         this.liveStatus = liveStatus;
         this.user = user;
     }
+
+    public Channel switchStat() {
+        this.liveStatus = !liveStatus;
+        return this;
+    }
 }

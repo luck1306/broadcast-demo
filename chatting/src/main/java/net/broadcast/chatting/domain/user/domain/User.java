@@ -37,17 +37,6 @@ public class User extends net.broadcast.chatting.global.entity.BaseEntity implem
     Channel channel;
 
     @lombok.Builder
-    public User(
-        String nickname,
-        String accountId, 
-        String password
-    ) {
-        this.nickname = nickname;
-        this.accountId = accountId;
-        this.password = password;
-        this.userRole = UserRole.ROLE_USER;
-    }
-
     public User( // For Admin Creating
         String nickname,
         String accountId, 

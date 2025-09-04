@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public void signUp(@RequestBody SignUpRequest req) {
-        service.signUp(req.getNickname(), req.getAccountId(), req.getPassword());
+        service.signUp(req.getNickname(), req.getAccountId(), req.getPassword(), req.getRole());
     }
 
     @PostMapping("/signin")

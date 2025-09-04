@@ -1,7 +1,10 @@
 package net.broadcast.chatting.domain.channel.service;
 
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -52,5 +55,12 @@ public class ChannelService {
             .user(u)
             .build();
         channelRepository.save(cn);
+    }
+
+    public void notStreamStat() {
+        UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findById(UUID.fromString(details.getUsername())).orElseThrow(() -> NoSuchUserException.EXCEPTION);
+        Channel channel = channelRepository.findByUserOptional(user).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
+        channelRepository.save(channel.switchStat());
     }
 }

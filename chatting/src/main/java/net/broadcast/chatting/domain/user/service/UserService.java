@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
+import net.broadcast.chatting.domain.user.domain.type.UserRole;
 import net.broadcast.chatting.domain.user.exception.AlreadyNicknameExistException;
 import net.broadcast.chatting.domain.user.exception.BadRequestTokenTypeException;
 import net.broadcast.chatting.domain.user.exception.DifferentTokenException;
@@ -28,7 +29,8 @@ public class UserService {
     public void signUp(
         String nickname,
         String accountId,
-        String password
+        String password,
+        String role
     ) {
         if(userRepository.existsByAccountId(accountId)) {
             throw AlreadyNicknameExistException.EXCEPTION;
@@ -37,6 +39,7 @@ public class UserService {
             .nickname(nickname)
             .accountId(accountId)
             .password(passwordEncoder.encode(password))
+            .userRole(UserRole.valueOf(role))
             .build();
         userRepository.save(user);
     }

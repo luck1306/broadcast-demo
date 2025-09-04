@@ -5,5 +5,5 @@ public class SignUpRequest {
     String nickname;
     String accountId;
     String password;
+    String role;
 }
-    

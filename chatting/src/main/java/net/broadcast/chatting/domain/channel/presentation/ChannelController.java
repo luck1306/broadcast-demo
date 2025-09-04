@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RequiredArgsConstructor
 @RequestMapping("/channels")
@@ -42,6 +44,12 @@ public class ChannelController {
     @PostMapping("/create")
     public void createChannel(@RequestBody ChannelInfoRequest request) {
         channelService.createChannel(request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/stream")
+    public void notStreamStat() {
+        channelService.notStreamStat();
     }
     
 }
