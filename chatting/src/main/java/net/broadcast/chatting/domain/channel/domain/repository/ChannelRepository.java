@@ -9,5 +9,5 @@ import net.broadcast.chatting.domain.user.domain.User;
 public interface ChannelRepository extends org.springframework.data.jpa.repository.JpaRepository<Channel, java.util.UUID> {
     List<Channel> findAllByLiveStatus(boolean liveStatus);
     Optional<Channel> findByChannelName(String channelName);
-    Optional<Channel> findByUserOptional(User user);
+    Optional<Channel> findByUser(User user);
 }
