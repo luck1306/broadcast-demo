@@ -8,7 +8,7 @@ const ChattingBox = () => {
     const [inputMessage, setInputMessage] = useState("");
     const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
     const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZjEzNTcyOS02NjMyLTQzM2MtYmY0MS1jOWRiMzYxMDY5ZjYiLCJleHAiOjE3NTc1NzQxMzEsInR5cCI6ImFjY2VzcyJ9.lIOFEeFbcOMRpw6wqPtUxWRnaPc6nN9Y61ZIs06mp7A";
+        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZjEzNTcyOS02NjMyLTQzM2MtYmY0MS1jOWRiMzYxMDY5ZjYiLCJleHAiOjE3NjAyNjY3OTgsInR5cCI6InJlZnJlc2gifQ.2OOOUpa40z5M612EczVQKfoZO4vaqkv-nbrFa_01nRI";
 
     useEffect(() => {
         axios.get("http://localhost:8080/csrf").then((res) => {
@@ -41,8 +41,8 @@ const ChattingBox = () => {
                 },
                 connectHeaders: {
                     Authorization: "Bearer " + token,
-                    // [csrf[0]]: [csrf[1]],
-                    "X-XSRF-TOKEN": [csrf[1]]
+                    // [csrf[0]]: csrf[1],
+                    "X-XSRF-TOKEN": csrf[1]
                 },
             });
             client.activate();
