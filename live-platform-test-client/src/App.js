@@ -8,22 +8,27 @@ import ViewerPage from "./component/page/BroadcastListPage.jsx";
 import BroadcastViewer from "./component/common/viewer/BroadcastViewer.jsx";
 import StreamerDashBoard from "./component/common/streamer/StreamerDashBoard.jsx";
 import NotFoundPage from "./component/page/NotFoundPage.jsx";
+import ChattingBox from "./component/common/chatting/ChattingBox.jsx";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* <Video /> */}
-        {/* <Socket /> */}
-        <Route path="/" element={<RootPage />} />
-        <Route path="/broadcast" element={<StreamerDashBoard />} />
-        <Route path="/broadcast-list" element={<ViewerPage />} />
-        <Route path="/broadcast/:channelName" element={<BroadcastViewer />} />
-        <Route path="/dashboard" element={<StreamerDashBoard />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/* <Video /> */}
+                {/* <Socket /> */}
+                <Route path="/" element={<RootPage />} />
+                <Route path="/broadcast" element={<StreamerDashBoard />} />
+                <Route path="/broadcast-list" element={<ViewerPage />} />
+                <Route
+                    path="/broadcast/:channelName"
+                    element={<BroadcastViewer />}
+                />
+                {/* <Route path="/dashboard" element={<StreamerDashBoard />} /> */}
+                <Route path="/chatting" element={<ChattingBox />} />
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
