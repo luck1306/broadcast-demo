@@ -31,8 +31,6 @@ public class ChattingService {
         Channel channel = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
 
         Chat chat = Chat.builder()
-            .userId(user.getId())
-            .channelId(channel.getId())
             .user(user)
             .channel(channel)
             .message(request.getMessage())
