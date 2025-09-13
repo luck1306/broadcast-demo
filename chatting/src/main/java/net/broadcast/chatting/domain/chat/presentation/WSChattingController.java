@@ -47,5 +47,4 @@ public class WSChattingController {
         return m;
     }
     
-    
 }

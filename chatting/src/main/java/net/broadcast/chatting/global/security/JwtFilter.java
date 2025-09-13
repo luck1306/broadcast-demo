@@ -2,6 +2,8 @@ package net.broadcast.chatting.global.security;
 
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -10,6 +12,8 @@ import net.broadcast.chatting.global.util.SecurityUtil;
 
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
+
+    final static Logger log = LoggerFactory.getLogger(JwtFilter.class);
 
     final JwtProvider provider;
     final SecurityUtil securityUtil;
@@ -25,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = getTokenBody(request);
         if (token != null) {
             UUID userId = UUID.fromString(provider.parseClaims(token).getSubject());
+            log.info("{}", userId);
             Authentication authentication = securityUtil.generateAuthentication(userId);
             org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authentication);
         }

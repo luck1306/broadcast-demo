@@ -2,6 +2,7 @@ package net.broadcast.chatting.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -43,10 +44,23 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                    // .requestMatchers("/channels/**").authenticated()
-                    // .requestMatchers("/users/reissue").authenticated()
-                    // .requestMatchers("/users/logout").authenticated()
-                    .anyRequest().permitAll()
+                    // STOMP HandShake
+                    .requestMatchers("/chatting/**").permitAll()
+
+                    // "/users"
+                    .requestMatchers(HttpMethod.POST, "/users/signup").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/users/signin").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/users/reissue").authenticated()
+                    .requestMatchers(HttpMethod.DELETE,"/users/logout").authenticated()
+
+                    // "/channels"
+                    .requestMatchers(HttpMethod.GET, "/channels/all").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/channels/onair").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/channels/search/{channelName}").authenticated()
+                    .requestMatchers(HttpMethod.POST, "/channels/create").authenticated()
+                    .requestMatchers(HttpMethod.PUT, "/channels/stream").authenticated()
+
+                    .anyRequest().denyAll()
                 )
                 .addFilterBefore(new JwtFilter(provider, util), org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class)
                 .build();
