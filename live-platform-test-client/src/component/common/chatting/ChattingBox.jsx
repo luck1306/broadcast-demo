@@ -1,26 +1,24 @@
 import { useEffect, useState, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import axios from "axios";
 
 const ChattingBox = () => {
     const clientRef = useRef(null);
     const [inputMessage, setInputMessage] = useState("");
-    const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
+    // const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
     const token =
         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZjEzNTcyOS02NjMyLTQzM2MtYmY0MS1jOWRiMzYxMDY5ZjYiLCJleHAiOjE3NjAyNjY3OTgsInR5cCI6InJlZnJlc2gifQ.2OOOUpa40z5M612EczVQKfoZO4vaqkv-nbrFa_01nRI";
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/csrf").then((res) => {
-            const hn = res.data.headerName;
-            const hv = res.data.token;
-            setCsrf([hn, hv]);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/csrf").then((res) => {
+    //         const hn = res.data.headerName;
+    //         const hv = res.data.token;
+    //         setCsrf([hn, hv]);
+    //     });
+    // }, []);
 
     useEffect(() => {
-        if (csrf !== null && csrf !== undefined && csrf.length > 1) {
-            console.log(csrf);
+        // if (csrf !== null && csrf !== undefined && csrf.length > 1) {
             const client = new Client({
                 webSocketFactory: () =>
                     new SockJS("http://localhost:8080/chatting"),
@@ -42,18 +40,18 @@ const ChattingBox = () => {
                 connectHeaders: {
                     Authorization: "Bearer " + token,
                     // [csrf[0]]: csrf[1],
-                    "X-XSRF-TOKEN": csrf[1]
+                    // "X-XSRF-TOKEN": csrf[1]
                 },
             });
             client.activate();
             clientRef.current = client;
-        }
+        // }
         return () => {
             if (clientRef.current) {
                 clientRef.current.deactivate();
             }
         };
-    }, [csrf]);
+    }, []);
     const sendMessage = () => {
         const destination = "/app/message/woonil_channel";
         const body = {

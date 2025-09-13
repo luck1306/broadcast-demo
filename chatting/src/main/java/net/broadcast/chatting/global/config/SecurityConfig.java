@@ -9,8 +9,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
+// import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+// import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.global.security.JwtFilter;
@@ -30,16 +30,17 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        XorCsrfTokenRequestAttributeHandler requestHandler = new XorCsrfTokenRequestAttributeHandler(); // BREACH 보호용 기본 핸들러. 요청에서 마스킹값을 복원함.
-        requestHandler.setCsrfRequestAttributeName("_csrf");
+        // XorCsrfTokenRequestAttributeHandler requestHandler = new XorCsrfTokenRequestAttributeHandler(); // BREACH 보호용 기본 핸들러. 요청에서 마스킹값을 복원함.
+        // requestHandler.setCsrfRequestAttributeName("_csrf");
 
         return http.httpBasic(AbstractHttpConfigurer::disable)
-                .csrf(csrf -> csrf
-                    .ignoringRequestMatchers("/users/sign**") // 로그인 / 회원가입 csrf 검증 제외
-                    .ignoringRequestMatchers("/chatting/**")
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // 쿠키에 csrf 토큰을 넣어 js에서 읽을 수 있게 함
-                    .csrfTokenRequestHandler(requestHandler)
-                )
+                // .csrf(csrf -> csrf
+                //     .ignoringRequestMatchers("/users/sign**") // 로그인 / 회원가입 csrf 검증 제외
+                //     .ignoringRequestMatchers("/chatting/**")
+                //     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // 쿠키에 csrf 토큰을 넣어 js에서 읽을 수 있게 함
+                //     .csrfTokenRequestHandler(requestHandler)
+                // )
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                     // .requestMatchers("/channels/**").authenticated()
