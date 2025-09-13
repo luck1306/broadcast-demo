@@ -1,5 +1,7 @@
 package net.broadcast.chatting.domain.chat.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -15,28 +17,27 @@ import net.broadcast.chatting.domain.user.exception.NoSuchUserException;
 
 @RequiredArgsConstructor
 @Service
-public class ChattingsService {
+public class ChattingService {
+
+    final static Logger log = LoggerFactory.getLogger(ChattingService.class);
 
     final ChatRepository chatRepository;
     final UserRepository userRepository;
     final ChannelRepository channelRepository;
 
-    public ChatMessageDto sendMessage(ChatMessageDto request, String channelName) {
+    public void sendMessage(ChatMessageDto request, String channelName) {
+        log.info(channelName);
         User user = userRepository.findByNickname(request.getSender()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
         Channel channel = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
 
         Chat chat = Chat.builder()
-            .userId(user)
-            .channelId(channel)
+            .userId(user.getId())
+            .channelId(channel.getId())
+            .user(user)
+            .channel(channel)
             .message(request.getMessage())
             .build();
         chatRepository.save(chat);
-        return request;
-    }
-
-    public String getChannelName(String channelName) {
-        Channel cn = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
-        chatRepository.findByChannelId(cn).forEach(e -> System.out.println(e));
-        return channelName;
+        
     }
 }

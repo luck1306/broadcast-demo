@@ -3,6 +3,8 @@ package net.broadcast.chatting.global.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
 import org.springframework.security.messaging.access.intercept.MessageMatcherDelegatingAuthorizationManager;
@@ -19,5 +21,15 @@ public class WSSecurityConfig {
             .simpSubscribeDestMatchers("/sub/**").permitAll() // broker가 해당 prefix를 붙여서 구독자에게 메시지를 보냄
             .anyMessage().denyAll()
             .build();
+    }
+
+    @Bean(name = "csrfChannelInterceptor") // csrf를 관활하는 interceptor bean override
+    ChannelInterceptor csrfChannelInterceptor() { // origin Bean is org.springframework.security.messaging.web.csrf.XorCsrfChannelInterceptor
+        return new ChannelInterceptor() {
+            @Override
+            public Message<?> preSend(Message<?> message, MessageChannel channel) {
+                return message;
+            }
+        };
     }
 }

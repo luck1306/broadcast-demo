@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ChatIid implements java.io.Serializable {
+public class ChatId implements java.io.Serializable {
 
     @Column(name = "channel_id", nullable = false)
     UUID channelId;

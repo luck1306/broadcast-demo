@@ -22,3 +22,10 @@ spring:
                     max-idle: 8
                     min-idle: 0
                     max-wait: -1ms
+jwt:
+    secret: ${JWT_SECRET}
+    access-expiration-minutes: 30 # 30 minutes
+    refresh-expiration-minutes: 43200 # 30 days
+    token-prefix: Bearer 
+    header-string: Authorization
+    cookie-string: refreshToken

@@ -12,6 +12,7 @@ import net.broadcast.chatting.domain.user.presentation.dto.response.SignInRespon
 import net.broadcast.chatting.domain.user.service.UserService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class UserController {
         service.signUp(req.getNickname(), req.getAccountId(), req.getPassword(), req.getRole());
     }
 
-    @PostMapping("/signin")
+    @PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE)
     public SignInResponse signIn(@RequestBody SignInRequest req) {
         return service.signIn(req.getAccountId(), req.getPassword());
     }
