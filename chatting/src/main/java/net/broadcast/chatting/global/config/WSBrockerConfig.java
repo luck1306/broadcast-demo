@@ -2,8 +2,8 @@ package net.broadcast.chatting.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
-import org.springframework.security.messaging.web.socket.server.CsrfTokenHandshakeInterceptor;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+// import org.springframework.security.messaging.web.socket.server.CsrfTokenHandshakeInterceptor;
 // import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class WSBrockerConfig implements org.springframework.web.socket.config.an
     public void registerStompEndpoints(org.springframework.web.socket.config.annotation.StompEndpointRegistry registry) {
         registry
             .addEndpoint("/chatting")
-            .addInterceptors(new CsrfTokenHandshakeInterceptor()) // http 요청의 csrf token을 websocket 속성으로 사용하기 위한 interceptor
+            // .addInterceptors(new CsrfTokenHandshakeInterceptor()) // http 요청의 csrf token을 websocket 속성으로 사용하기 위한 interceptor
             // .addInterceptors(new HttpSessionHandshakeInterceptor())
             .setAllowedOriginPatterns("*")
             .withSockJS(); // for SockJS

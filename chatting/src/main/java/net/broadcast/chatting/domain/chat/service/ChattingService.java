@@ -10,6 +10,7 @@ import net.broadcast.chatting.domain.channel.domain.repository.ChannelRepository
 import net.broadcast.chatting.domain.channel.exception.ChannelNotFoundException;
 import net.broadcast.chatting.domain.chat.domain.Chat;
 import net.broadcast.chatting.domain.chat.domain.repository.ChatRepository;
+import net.broadcast.chatting.domain.chat.exception.stomp.TestStompException;
 import net.broadcast.chatting.domain.chat.presentation.dto.ChatMessageDto;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
@@ -27,6 +28,7 @@ public class ChattingService {
 
     public void sendMessage(ChatMessageDto request, String channelName) {
         log.info(channelName);
+        // throw TestStompException.EXCEPTION;
         User user = userRepository.findByNickname(request.getSender()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
         Channel channel = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
 
