@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                     // STOMP HandShake
                     .requestMatchers("/chatting/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/chats/{channelName}").authenticated()
 
                     // "/users"
                     .requestMatchers(HttpMethod.POST, "/users/signup").permitAll()
