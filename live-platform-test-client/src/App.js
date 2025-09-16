@@ -9,6 +9,7 @@ import BroadcastViewer from "./component/common/viewer/BroadcastViewer.jsx";
 import StreamerDashBoard from "./component/common/streamer/StreamerDashBoard.jsx";
 import NotFoundPage from "./component/page/NotFoundPage.jsx";
 import ChattingBox from "./component/common/chatting/ChattingBox.jsx";
+import LoginPage from "./component/page/LoginPage.jsx";
 
 function App() {
     return (
@@ -25,10 +26,18 @@ function App() {
                 />
                 {/* <Route path="/dashboard" element={<StreamerDashBoard />} /> */}
                 <Route path="/chatting" element={<ChattingBox />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );
 }
-
+/**
+ * - 로그인 페이지
+- 회원가입 페이지
+- 방송 목록
+- 방송 검색
+- 방송 페이지(수신자)
+- 방송 페이지(송신자)
+ */
 export default App;
