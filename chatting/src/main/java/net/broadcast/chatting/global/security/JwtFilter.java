@@ -29,7 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = getTokenBody(request);
         if (token != null) {
             UUID userId = UUID.fromString(provider.parseClaims(token).getSubject());
-            log.info("{}", userId);
+            log.info("User.userId={}", userId);
             Authentication authentication = securityUtil.generateAuthentication(userId);
             org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authentication);
         }

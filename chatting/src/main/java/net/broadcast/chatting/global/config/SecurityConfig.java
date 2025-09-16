@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // CORS Pre-Flight
                     // STOMP HandShake
                     .requestMatchers("/chatting/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/chats/{channelName}").authenticated()
