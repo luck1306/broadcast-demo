@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginApi from "../../library/api/LoginApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const LoginPage = () => {
@@ -33,7 +33,7 @@ const LoginPage = () => {
             <button
                 onClick={async () => {
                     console.log(userInfo);
-                    LoginApi({ ...userInfo })
+                    LoginApi(userInfo)
                         .then((res) => {
                             console.log(res.data);
                             Cookies.set("accessToken", res.data.accessToken);
@@ -43,7 +43,7 @@ const LoginPage = () => {
                         })
                         .catch((err) => {
                             alert(
-                                `[${err.response.data.statCode}] - ${err.response.data.message}`
+                                `[${err.response?.data.statCode}] - ${err.response?.data.message}`
                             );
                         });
                     navigate("/");
@@ -52,7 +52,9 @@ const LoginPage = () => {
                 로그인
             </button>
             <br />
-            <button onClick={() => console.log("회원가입")}>회원가입</button>
+            <button>
+                <Link to="/">회원가입</Link>
+            </button>
             <br />
         </div>
     );
