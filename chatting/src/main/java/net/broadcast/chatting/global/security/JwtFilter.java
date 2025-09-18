@@ -27,10 +27,11 @@ public class JwtFilter extends OncePerRequestFilter {
         throws java.io.IOException, jakarta.servlet.ServletException 
     {
         String token = getTokenBody(request);
-        if (token != null) {
-            UUID userId = UUID.fromString(provider.parseClaims(token).getSubject());
-            log.info("User.userId={}", userId);
-            Authentication authentication = securityUtil.generateAuthentication(userId);
+        if (token != null) { // modify sub is nickname
+            // UUID userId = UUID.fromString(provider.parseClaims(token).getSubject());
+            String nickname = provider.parseClaims(token).getSubject();
+            log.info("User.nickname={}", nickname);
+            Authentication authentication = securityUtil.generateAuthentication(nickname);
             org.springframework.security.core.context.SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

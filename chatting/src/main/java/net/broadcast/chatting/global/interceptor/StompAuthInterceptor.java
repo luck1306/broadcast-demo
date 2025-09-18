@@ -35,8 +35,8 @@ public class StompAuthInterceptor implements ChannelInterceptor {
                 String authToken = accessor.getFirstNativeHeader("Authorization");
                 if (authToken != null && authToken.startsWith("Bearer ")) {
                     authToken = authToken.substring(7);
-                    UUID userId = UUID.fromString(jwtProvider.parseClaims(authToken).getSubject());
-                    Authentication authentication = securityUtil.generateAuthentication(userId);
+                    String nickname = jwtProvider.parseClaims(authToken).getSubject();
+                    Authentication authentication = securityUtil.generateAuthentication(nickname);
                     accessor.setUser(authentication);
                 }
                 log.info("STOMP Connect: sessionId={}, token={}", accessor.getSessionId(), authToken);

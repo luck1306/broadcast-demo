@@ -20,8 +20,8 @@ public class SecurityUtil {
 
     final UserRepository userRepository;
     
-    public Authentication generateAuthentication(UUID userid) {
-        User pricinpal = userRepository.findById(userid)
+    public Authentication generateAuthentication(String nickname) {
+        User pricinpal = userRepository.findByNickname(nickname)
             .orElseThrow(() -> NoSuchUserException.EXCEPTION);
         return new UsernamePasswordAuthenticationToken(
             (UserDetails) pricinpal, 

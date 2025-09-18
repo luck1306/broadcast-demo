@@ -1,7 +1,6 @@
 package net.broadcast.chatting.domain.user.service;
 
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,12 +54,12 @@ public class UserService {
             throw PasswordIsWrongException.EXCEPTION;
         }
         
-        String subject = user.getId().toString();
+        String subject = user.getNickname();
         String accessToken = jwtProvider.generateToken(subject, jwtProperty.getAccessExpirationMinutes());
         String refreshToken = jwtProvider.generateToken(subject, jwtProperty.getRefreshExpirationMinutes());
         
         RedisUtil.setString(
-            subject,
+            user.getId().toString(),
             refreshToken,
             jwtProperty.getRefreshExpirationMinutes()
         );
@@ -77,7 +76,8 @@ public class UserService {
             throw BadRequestTokenTypeException.EXCEPTION;
         }
         String subject = jwtProvider.parseClaims(refreshToken).getSubject();
-        String savedRefreshToken = RedisUtil.get(subject);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String savedRefreshToken = RedisUtil.get(user.getId().toString());
         if(!refreshToken.equals(savedRefreshToken)) {
             throw DifferentTokenException.EXCEPTION;
         }
@@ -86,7 +86,7 @@ public class UserService {
         String newRefreshToken = jwtProvider.generateToken(subject, jwtProperty.getRefreshExpirationMinutes());
         
         RedisUtil.setString(
-            subject,
+            user.getId().toString(),
             newRefreshToken,
             jwtProperty.getRefreshExpirationMinutes()
         );
@@ -98,8 +98,8 @@ public class UserService {
     }
 
     public void logout() {
-        UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String subject = userRepository.findByNickname(details.getUsername())
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String subject = userRepository.findByNickname(user.getUsername())
             .orElseThrow(() -> NoSuchUserException.EXCEPTION)
             .getId().toString();
         if(RedisUtil.get(subject) == null) throw NotLoginCurrentException.EXCPETION;

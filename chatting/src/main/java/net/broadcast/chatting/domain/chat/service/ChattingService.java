@@ -29,7 +29,10 @@ public class ChattingService {
     final UserRepository userRepository;
     final ChannelRepository channelRepository;
 
-    public void sendMessage(ChatMessageDto request, String channelName) {
+    public void sendMessage(
+        ChatMessageDto request, 
+        String channelName
+    ) {
         log.info(channelName);
         // throw TestStompException.EXCEPTION;
         User user = userRepository.findByNickname(request.getSender()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
@@ -43,7 +46,9 @@ public class ChattingService {
         chatRepository.save(chat);
     }
 
-    public ChatsResponse getChats(String channelName) {
+    public ChatsResponse getChats(
+        String channelName
+    ) {
         Channel channel = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
         List<ChatMessageDto> lists = chatRepository.enterChannelWithRecently(channel);
         log.info(lists.toString());
