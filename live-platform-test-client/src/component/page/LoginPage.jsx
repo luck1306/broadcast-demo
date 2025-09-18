@@ -39,14 +39,14 @@ const LoginPage = () => {
                             Cookies.set("accessToken", res.data.accessToken);
                             Cookies.set("refreshToken", res.data.refreshToken);
                             alert("로그인 성공");
-                            navigate("/");
+                            // navigate("/");
+                            window.location.href = "/"
                         })
                         .catch((err) => {
                             alert(
                                 `[${err.response?.data.statCode}] - ${err.response?.data.message}`
                             );
                         });
-                    navigate("/");
                 }}
             >
                 로그인

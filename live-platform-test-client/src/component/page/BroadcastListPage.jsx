@@ -13,7 +13,7 @@ const BroadCastListPage = () => {
         <>
             <h1>Welcome! Enjoy Broadcast!</h1>
             <div className="broadcast-list">
-                <ul>
+                <ul style={{ listStyleType: "none", padding: 0 }}>
                     <BroadcastList
                         channelName={"test"}
                         userId={userId}

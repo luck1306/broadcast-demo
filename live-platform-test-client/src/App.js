@@ -11,10 +11,12 @@ import NotFoundPage from "./component/page/NotFoundPage.jsx";
 import ChattingBox from "./component/common/chatting/ChattingBox.jsx";
 import LoginPage from "./component/page/LoginPage.jsx";
 import JoiningMembershipPage from "./component/page/JoiningMembershipPage.jsx";
+import Header from "./component/common/header/Header.jsx";
 
 function App() {
     return (
         <BrowserRouter>
+            <Header></Header>
             <Routes>
                 {/* <Video /> */}
                 {/* <Socket /> */}

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const BroadcastList = (props) => {
   return (
-    <li>
+    <li style={{ margin: "10px 10px" }}>
       <button>
         <Link
           to={{
