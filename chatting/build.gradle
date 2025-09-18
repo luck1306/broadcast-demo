@@ -52,3 +52,21 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+import java.util.Properties
+def loadEnv() { // env file load
+	def props = new Properties()
+	file(".env").withInputStream { props.load(it) }
+	return props
+}
+
+tasks.named("bootRun") {
+	doFirst {
+		def props = loadEnv()
+		environment props
+	}
+}
+
+tasks.withType(JavaCompile) { // -parameters
+	options.compilerArgs += ['-parameters']
+}
