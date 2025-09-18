@@ -1,7 +1,5 @@
 package net.broadcast.chatting.global.util;
 
-import java.util.UUID;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
