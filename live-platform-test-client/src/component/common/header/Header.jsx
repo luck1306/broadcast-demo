@@ -23,7 +23,6 @@ const Header = () => {
                     <Link to="/broadcast">방송하기</Link> |{" "}
                     <Link to="/broadcast-list">방송보기</Link> |{" "}
                     <Link to="/chatting">채팅</Link> |{" "}
-                    
                     <Link to="/logout">로그아웃</Link>
                 </>
             ): (
