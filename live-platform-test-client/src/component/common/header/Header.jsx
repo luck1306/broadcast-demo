@@ -8,7 +8,7 @@ const Header = () => {
                 <>
                     <Link to="/">홈</Link> |{" "}
                     <Link to="/broadcast">방송하기</Link> |{" "}
-                    <Link to="/broadcast-list">방송보기</Link> |{" "}
+                    <Link to="/live-list">방송보기</Link> |{" "}
                     <Link to="/chatting">채팅</Link> |{" "}
                     <Link
                         onClick={() => {

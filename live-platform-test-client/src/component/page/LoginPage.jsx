@@ -16,7 +16,7 @@ const LoginPage = () => {
         } catch (e) {
             return null;
         }
-    }
+    };
 
     return (
         <div>
@@ -45,12 +45,21 @@ const LoginPage = () => {
                     LoginApi(userInfo)
                         .then((res) => {
                             console.log(res.data);
-                            Cookies.set("accessToken", res.data.accessToken);
-                            Cookies.set("refreshToken", res.data.refreshToken);
-                            Cookies.set("nickname", parseJwt(res.data.accessToken)["sub"]);
+                            Cookies.set(
+                                "accessToken",
+                                "Bearer " + res.data.accessToken
+                            );
+                            Cookies.set(
+                                "refreshToken",
+                                "Bearer " + res.data.refreshToken
+                            );
+                            Cookies.set(
+                                "nickname",
+                                parseJwt(res.data.accessToken)["sub"]
+                            );
                             alert("로그인 성공");
                             // navigate("/");
-                            window.location.href = "/"
+                            window.location.href = "/";
                         })
                         .catch((err) => {
                             alert(

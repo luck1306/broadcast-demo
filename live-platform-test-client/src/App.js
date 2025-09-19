@@ -41,5 +41,6 @@ function App() {
 - 방송 검색
 - 방송 페이지(수신자)
 - 방송 페이지(송신자)
+- react 페이지 인가 인터셉터
  */
 export default App;

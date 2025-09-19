@@ -50,7 +50,7 @@ const JoiningMembership = () => {
                         alert(
                             `[${err.response?.data.statCode}] - ${err.response?.data.message}`
                         );
-                    });  
+                    });
             }}>회원가입</button>
         </div>
     );

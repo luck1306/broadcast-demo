@@ -11,7 +11,7 @@ const BroadcastViewer = () => {
     const iceCandidateQueue = useRef([]);
     const { channelName } = useParams();
     const receivedState = useLocation().state;
-    const userId = receivedState.current + crypto.randomUUID().slice(0, 4);
+    const userId = receivedState+ "#" + crypto.randomUUID().slice(0, 4);
 
     const addCandidate = (cd) => {
         console.log(
@@ -101,7 +101,7 @@ const BroadcastViewer = () => {
     return (
         <>
             <h1>여긴 {channelName}의 방송입니다.</h1>
-            <p>"{receivedState.current}"님 반갑습니다!</p>{" "}
+            <p>"{receivedState}"님 반갑습니다!</p>{" "}
             {/* --- Nickname --- */}
             <video
                 id="peerPlayer"
