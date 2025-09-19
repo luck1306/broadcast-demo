@@ -1,9 +1,9 @@
 import { useState } from "react";
-import JoinMembership from "../../library/api/JoinMemebership";
+import JoinMembership from "../../../library/api/JoinMemebership";
 import { useNavigate } from "react-router-dom";
 
 const JoiningMembership = () => {
-    const navigate = useNavigate
+    const navigate = useNavigate;
     const [userInfo, setUserInfo] = useState({
         nickname: "",
         accountId: "",
@@ -39,19 +39,23 @@ const JoiningMembership = () => {
                 }
             />
             <br />
-            <button onClick={() => {
-                JoinMembership(userInfo)
-                    .then((res) => {
-                        console.log(res.data);
-                        alert("회원가입 성공");
-                        navigate("/login");
-                    })
-                    .catch((err) => {
-                        alert(
-                            `[${err.response?.data.statCode}] - ${err.response?.data.message}`
-                        );
-                    });
-            }}>회원가입</button>
+            <button
+                onClick={() => {
+                    JoinMembership(userInfo)
+                        .then((res) => {
+                            console.log(res.data);
+                            alert("회원가입 성공");
+                            navigate("/login");
+                        })
+                        .catch((err) => {
+                            alert(
+                                `[${err.response?.data.statCode}] - ${err.response?.data.message}`
+                            );
+                        });
+                }}
+            >
+                회원가입
+            </button>
         </div>
     );
 };

@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
+import Cookies from "js-cookie";
 
 const ChattingBox = () => {
     const clientRef = useRef(null);
     const [inputMessage, setInputMessage] = useState("");
     // const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
-    const token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZjEzNTcyOS02NjMyLTQzM2MtYmY0MS1jOWRiMzYxMDY5ZjYiLCJleHAiOjE3NjAzMjM4NzcsInR5cCI6InJlZnJlc2gifQ.9NCnJ2e8PMI0_zjPMWpBOAsX4KmM2bUD42w30LMR39Y";
+    const [token, setToken] = useState(Cookies.get("accessToken"));
 
     // useEffect(() => {
     //     axios.get("http://localhost:8080/csrf").then((res) => {
@@ -19,37 +19,38 @@ const ChattingBox = () => {
 
     useEffect(() => {
         // if (csrf !== null && csrf !== undefined && csrf.length > 1) {
-            const client = new Client({
-                webSocketFactory: () =>
-                    new SockJS("http://localhost:8080/chatting"),
-                // brokerURL: "ws://localhost:8080/chatting",
-                reconnectDelay: 5000,
-                debug: (str) => console.log("[STOMP]", str),
-                onConnect: () => {
-                    console.log("O STOMP connection success!");
-                    client.subscribe("/sub/chat/woonil_channel", (msg) => {
-                        console.log("[SUBSCRIBE]");
-                        console.log(msg);
-                        console.log("[---------]");
-                    });
-                    client.subscribe("/sub/error", (msg) => {
-                        console.log("[ERROR]");
-                        console.log(msg);
-                        console.log("[---------]");
-                    });
-                },
-                onStompError: (frame) => {
-                    console.error("X STOMP error", frame.headers["message"]);
-                    console.error(frame);
-                },
-                connectHeaders: {
-                    Authorization: "Bearer " + token,
-                    // [csrf[0]]: csrf[1],
-                    // "X-XSRF-TOKEN": csrf[1]
-                },
-            });
-            client.activate();
-            clientRef.current = client;
+        console.log(token);
+        const client = new Client({
+            webSocketFactory: () =>
+                new SockJS("http://localhost:8080/chatting"),
+            // brokerURL: "ws://localhost:8080/chatting",
+            reconnectDelay: 5000,
+            debug: (str) => console.log("[STOMP]", str),
+            onConnect: () => {
+                console.log("O STOMP connection success!");
+                client.subscribe("/sub/chat/woonil_channel", (msg) => {
+                    console.log("[SUBSCRIBE]");
+                    console.log(msg);
+                    console.log("[---------]");
+                });
+                client.subscribe("/sub/error", (msg) => {
+                    console.log("[ERROR]");
+                    console.log(msg);
+                    console.log("[---------]");
+                });
+            },
+            onStompError: (frame) => {
+                console.error("X STOMP error", frame.headers["message"]);
+                console.error(frame);
+            },
+            connectHeaders: {
+                Authorization: token,
+                // [csrf[0]]: csrf[1],
+                // "X-XSRF-TOKEN": csrf[1]
+            },
+        });
+        client.activate();
+        clientRef.current = client;
         // }
         return () => {
             if (clientRef.current) {
@@ -84,7 +85,7 @@ const ChattingBox = () => {
                 headers: {
                     Authorization: "Bearer " + token,
                 },
-            })
+            });
         } else {
             console.warn("! STOMP client isn't connect yet");
         }

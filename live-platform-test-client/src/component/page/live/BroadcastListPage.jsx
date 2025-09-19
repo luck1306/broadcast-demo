@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import BroadcastList from "../common/viewer/BroadcastListElement";
-import GetChannelsApi from "../../library/api/GetChannelsApi";
+import BroadcastList from "../../common/viewer/BroadcastListElement";
+import GetChannelsApi from "../../../library/api/GetChannelsApi";
 import Cookies from "js-cookie";
 
 const BroadCastListPage = () => {

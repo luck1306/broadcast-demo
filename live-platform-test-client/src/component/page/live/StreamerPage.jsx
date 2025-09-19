@@ -1,5 +1,5 @@
-import ChattingBox from "../common/ChattingBox";
-import StreamerDashBoard from "../common/streamer/StreamerDashBoard";
+import ChattingBox from "../../common/chatting/ChattingBox";
+import StreamerDashBoard from "../../common/streamer/StreamerDashBoard";
 
 const StreamerPage = () => {
     return (

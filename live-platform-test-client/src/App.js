@@ -4,14 +4,14 @@ import "./App.css";
 // import Socket from "./component/common/CusSocketClient.jsx";
 // import TestWebRtc from "./component/common/testing/TestWebRtc.jsx";
 import RootPage from "./component/page/RootPage.jsx";
-import ViewerPage from "./component/page/BroadcastListPage.jsx";
+import ViewerPage from "./component/page/live/BroadcastListPage.jsx";
 import BroadcastViewer from "./component/common/viewer/BroadcastViewer.jsx";
-import StreamerDashBoard from "./component/common/streamer/StreamerDashBoard.jsx";
 import NotFoundPage from "./component/page/NotFoundPage.jsx";
 import ChattingBox from "./component/common/chatting/ChattingBox.jsx";
-import LoginPage from "./component/page/LoginPage.jsx";
-import JoiningMembershipPage from "./component/page/JoiningMembershipPage.jsx";
+import LoginPage from "./component/page/auth/LoginPage.jsx";
+import JoiningMembershipPage from "./component/page/auth/JoiningMembershipPage.jsx";
 import Header from "./component/common/header/Header.jsx";
+import StreamerPage from "./component/page/live/StreamerPage.jsx";
 
 function App() {
     return (
@@ -21,7 +21,7 @@ function App() {
                 {/* <Video /> */}
                 {/* <Socket /> */}
                 <Route path="/" element={<RootPage />} />
-                <Route path="/broadcast" element={<StreamerDashBoard />} />
+                <Route path="/broadcast" element={<StreamerPage />} />
                 <Route path="/live-list" element={<ViewerPage />} />
                 <Route
                     path="/live/:channelName"
