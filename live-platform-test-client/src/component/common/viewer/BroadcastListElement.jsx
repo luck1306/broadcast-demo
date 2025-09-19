@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 
 const BroadcastList = (props) => {
   return (
-    <li style={{ margin: "10px 10px" }}>
+    <li>
       <button>
         <Link
           to={{
-            pathname: `/broadcast/${props.channelName}`,
+            pathname: `/live/${props.channelName}`,
           }}
-          state={props.userId}
+          state={props.nickname}
         >
           보러가기
         </Link>

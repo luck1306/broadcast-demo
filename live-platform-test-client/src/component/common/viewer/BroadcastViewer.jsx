@@ -11,7 +11,7 @@ const BroadcastViewer = () => {
     const iceCandidateQueue = useRef([]);
     const { channelName } = useParams();
     const receivedState = useLocation().state;
-    const userId = receivedState.current;
+    const userId = receivedState.current + crypto.randomUUID().slice(0, 4);
 
     const addCandidate = (cd) => {
         console.log(
@@ -85,7 +85,7 @@ const BroadcastViewer = () => {
                     peerConnection.current.close();
                     peerConnection.current = new RTCPeerConnection();
                     iceCandidateQueue.current = [];
-                    window.location.href = "/broadcast-list";
+                    window.location.href = "/live-list";
                     break;
                 }
                 default:
@@ -101,7 +101,8 @@ const BroadcastViewer = () => {
     return (
         <>
             <h1>여긴 {channelName}의 방송입니다.</h1>
-            <p>"{userId}"님 반갑습니다!</p>
+            <p>"{receivedState.current}"님 반갑습니다!</p>{" "}
+            {/* --- Nickname --- */}
             <video
                 id="peerPlayer"
                 style={{ width: 640, height: 480 }}

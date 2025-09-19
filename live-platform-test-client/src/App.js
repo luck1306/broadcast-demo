@@ -22,9 +22,9 @@ function App() {
                 {/* <Socket /> */}
                 <Route path="/" element={<RootPage />} />
                 <Route path="/broadcast" element={<StreamerDashBoard />} />
-                <Route path="/broadcast-list" element={<ViewerPage />} />
+                <Route path="/live-list" element={<ViewerPage />} />
                 <Route
-                    path="/broadcast/:channelName"
+                    path="/live/:channelName"
                     element={<BroadcastViewer />}
                 />
                 {/* <Route path="/dashboard" element={<StreamerDashBoard />} /> */}

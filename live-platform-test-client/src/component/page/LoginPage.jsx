@@ -1,14 +1,23 @@
 import { useState } from "react";
 import LoginApi from "../../library/api/LoginApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const LoginPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         accountId: "",
         password: "",
     });
+
+    const parseJwt = (token) => {
+        try {
+            return JSON.parse(atob(token.split(".")[1]));
+        } catch (e) {
+            return null;
+        }
+    }
+
     return (
         <div>
             <p>로그인 페이지</p>
@@ -38,6 +47,7 @@ const LoginPage = () => {
                             console.log(res.data);
                             Cookies.set("accessToken", res.data.accessToken);
                             Cookies.set("refreshToken", res.data.refreshToken);
+                            Cookies.set("nickname", parseJwt(res.data.accessToken)["sub"]);
                             alert("로그인 성공");
                             // navigate("/");
                             window.location.href = "/"

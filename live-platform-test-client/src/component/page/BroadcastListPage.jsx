@@ -1,22 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import BroadcastList from "../common/viewer/BroadcastListElement";
+import Cookies from "js-cookie";
 
 const BroadCastListPage = () => {
-    const userId = useRef(null);
+    const nickname = useRef(null);
     useEffect(() => {
         console.log("BroadCastListPage mounted");
-        userId.current = crypto.randomUUID();
-        console.log("User ID: ", userId.current);
+        nickname.current = Cookies.get("nickname");
+        console.log("User Nickname: ", nickname.current);
     }, []);
-    console.log(process.env.REACT_APP_SIGSERVER);
+    console.log("Signal Server URL: ", process.env.REACT_APP_SIGSERVER);
     return (
         <>
             <h1>Welcome! Enjoy Broadcast!</h1>
-            <div className="broadcast-list">
+            <div className="live-list">
                 <ul style={{ listStyleType: "none", padding: 0 }}>
                     <BroadcastList
                         channelName={"test"}
-                        userId={userId}
+                        nickname={nickname}
                     ></BroadcastList>
                     {/* <BroadcastList channelName={"calm-down-man"}></BroadcastList>
           <BroadcastList channelName={"God-Chgang-seop"}></BroadcastList>
