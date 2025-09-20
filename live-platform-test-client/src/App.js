@@ -12,6 +12,8 @@ import LoginPage from "./component/page/auth/LoginPage.jsx";
 import JoiningMembershipPage from "./component/page/auth/JoiningMembershipPage.jsx";
 import Header from "./component/common/header/Header.jsx";
 import StreamerPage from "./component/page/live/StreamerPage.jsx";
+import LogoutPage from "./component/page/auth/LogoutPage.jsx";
+// import { AuthProvider } from "./component/page/auth/AuthProvider.jsx";
 
 function App() {
     return (
@@ -31,13 +33,13 @@ function App() {
                 <Route path="/chatting" element={<ChattingBox />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/join" element={<JoiningMembershipPage />} />
+                <Route path="/logout" element={<LogoutPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
     );
 }
 /**
-- 방송 목록
 - 방송 검색
 - 방송 페이지(수신자)
 - 방송 페이지(송신자)

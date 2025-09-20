@@ -92,7 +92,7 @@ const ChattingBox = () => {
     };
 
     return (
-        <div className="chatting-box">
+        <div className="chatting-box" style={{ border: "1px solid black", padding: "10px", width: "50%" }}>
             <ul id="chatList"></ul>
             <input
                 type="text"

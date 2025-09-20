@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginApi from "../../../library/api/LoginApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const LoginPage = () => {
@@ -9,6 +9,7 @@ const LoginPage = () => {
         accountId: "",
         password: "",
     });
+    const navigate = useNavigate();
 
     const parseJwt = (token) => {
         try {
@@ -41,10 +42,10 @@ const LoginPage = () => {
             <br />
             <button
                 onClick={async () => {
-                    console.log(userInfo);
+                    // console.log(userInfo);
                     LoginApi(userInfo)
                         .then((res) => {
-                            console.log(res.data);
+                            // console.log(res.data);
                             Cookies.set(
                                 "accessToken",
                                 "Bearer " + res.data.accessToken
@@ -58,8 +59,7 @@ const LoginPage = () => {
                                 parseJwt(res.data.accessToken)["sub"]
                             );
                             alert("로그인 성공");
-                            // navigate("/");
-                            window.location.href = "/";
+                            navigate("/", { replace: true });
                         })
                         .catch((err) => {
                             alert(
