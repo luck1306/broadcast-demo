@@ -4,8 +4,7 @@ import "./App.css";
 // import Socket from "./component/common/CusSocketClient.jsx";
 // import TestWebRtc from "./component/common/testing/TestWebRtc.jsx";
 import RootPage from "./component/page/RootPage.jsx";
-import ViewerPage from "./component/page/live/BroadcastListPage.jsx";
-import BroadcastViewer from "./component/common/viewer/BroadcastViewer.jsx";
+import BroadcastListPage from "./component/page/live/BroadcastListPage.jsx";
 import NotFoundPage from "./component/page/NotFoundPage.jsx";
 import ChattingBox from "./component/common/chatting/ChattingBox.jsx";
 import LoginPage from "./component/page/auth/LoginPage.jsx";
@@ -13,6 +12,7 @@ import JoiningMembershipPage from "./component/page/auth/JoiningMembershipPage.j
 import Header from "./component/common/header/Header.jsx";
 import StreamerPage from "./component/page/live/StreamerPage.jsx";
 import LogoutPage from "./component/page/auth/LogoutPage.jsx";
+import ViewerPage from "./component/page/live/ViewerPage.jsx";
 // import { AuthProvider } from "./component/page/auth/AuthProvider.jsx";
 
 function App() {
@@ -24,10 +24,10 @@ function App() {
                 {/* <Socket /> */}
                 <Route path="/" element={<RootPage />} />
                 <Route path="/broadcast" element={<StreamerPage />} />
-                <Route path="/live-list" element={<ViewerPage />} />
+                <Route path="/live-list" element={<BroadcastListPage />} />
                 <Route
                     path="/live/:channelName"
-                    element={<BroadcastViewer />}
+                    element={<ViewerPage />}
                 />
                 {/* <Route path="/dashboard" element={<StreamerDashBoard />} /> */}
                 <Route path="/chatting" element={<ChattingBox />} />

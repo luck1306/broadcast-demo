@@ -1,5 +1,5 @@
-import ChattingBox from "../common/ChattingBox";
-import BroadcastViewer from "../common/viewer/BroadcastViewer";
+import ChattingBox from "../../common/chatting/ChattingBox";
+import BroadcastViewer from "../../common/viewer/BroadcastViewer";
 
 const ViewerPage = () => {
     return (
