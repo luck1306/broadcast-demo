@@ -1,8 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-// import Video from "./component/common/CusVideoBox.jsx";
-// import Socket from "./component/common/CusSocketClient.jsx";
-// import TestWebRtc from "./component/common/testing/TestWebRtc.jsx";
 import RootPage from "./component/page/RootPage.jsx";
 import BroadcastListPage from "./component/page/live/BroadcastListPage.jsx";
 import NotFoundPage from "./component/page/NotFoundPage.jsx";
@@ -13,23 +10,16 @@ import Header from "./component/common/header/Header.jsx";
 import StreamerPage from "./component/page/live/StreamerPage.jsx";
 import LogoutPage from "./component/page/auth/LogoutPage.jsx";
 import ViewerPage from "./component/page/live/ViewerPage.jsx";
-// import { AuthProvider } from "./component/page/auth/AuthProvider.jsx";
 
 function App() {
     return (
         <BrowserRouter>
             <Header></Header>
             <Routes>
-                {/* <Video /> */}
-                {/* <Socket /> */}
                 <Route path="/" element={<RootPage />} />
                 <Route path="/broadcast" element={<StreamerPage />} />
                 <Route path="/live-list" element={<BroadcastListPage />} />
-                <Route
-                    path="/live/:channelName"
-                    element={<ViewerPage />}
-                />
-                {/* <Route path="/dashboard" element={<StreamerDashBoard />} /> */}
+                <Route path="/live/:channelName" element={<ViewerPage />} />
                 <Route path="/chatting" element={<ChattingBox />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/join" element={<JoiningMembershipPage />} />
@@ -40,7 +30,6 @@ function App() {
     );
 }
 /**
-- 방송 검색
 - 방송 페이지(수신자)
 - 방송 페이지(송신자)
 - react 페이지 인가 인터셉터
