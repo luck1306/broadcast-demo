@@ -11,7 +11,6 @@ import net.broadcast.chatting.domain.channel.domain.Channel;
 import net.broadcast.chatting.domain.channel.domain.repository.ChannelRepository;
 import net.broadcast.chatting.domain.channel.exception.ChannelNotFoundException;
 import net.broadcast.chatting.domain.channel.presentation.dto.request.ChannelInfoRequest;
-import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelInfoResponse;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
@@ -41,11 +40,11 @@ public class ChannelService {
         );
     }
 
-    public ChannelInfoResponse searchByChannelName(String channelName) {
-        List<Channel> cn = channelRepository.findByChannelNameFragment(channelName);
+    public ChannelListResponse searchByChannelName(String channelName) {
+        List<String> cn = channelRepository.findByChannelNameFragment(channelName);
         if (cn.isEmpty()) throw ChannelNotFoundException.EXCEPTION;
 
-        return new ChannelInfoResponse(cn);
+        return new ChannelListResponse(cn);
     }
 
     public void createChannel(ChannelInfoRequest request) {

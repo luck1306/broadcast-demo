@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.channel.presentation.dto.request.ChannelInfoRequest;
-import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelInfoResponse;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,7 @@ public class ChannelController {
     }
     
     @GetMapping("/search")
-    public ChannelInfoResponse searchByChannelName(@RequestParam String query) {
+    public ChannelListResponse searchByChannelName(@RequestParam String query) {
         return channelService.searchByChannelName(query);
     }
 

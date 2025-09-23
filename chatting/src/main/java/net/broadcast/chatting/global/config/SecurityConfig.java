@@ -58,7 +58,7 @@ public class SecurityConfig {
                     // "/channels"
                     .requestMatchers(HttpMethod.GET, "/channels/all").authenticated()
                     .requestMatchers(HttpMethod.GET, "/channels/onair").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/channels/search").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/channels/search").authenticated()
                     .requestMatchers(HttpMethod.POST, "/channels/create").authenticated()
                     .requestMatchers(HttpMethod.PUT, "/channels/stream").authenticated()
 

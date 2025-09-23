@@ -13,6 +13,6 @@ public interface ChannelRepository extends org.springframework.data.jpa.reposito
     Optional<Channel> findByChannelName(String channelName);
     Optional<Channel> findByUser(User user);
     
-    @Query("SELECT c FROM Channel c WHERE c.channelName LIKE %:channelName%")
-    List<Channel> findByChannelNameFragment(String channelName);
+    @Query("SELECT c.channelName FROM Channel c WHERE c.channelName LIKE %:cn% and c.liveStatus = true")
+    List<String> findByChannelNameFragment(String cn);
 }

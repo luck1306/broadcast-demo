@@ -7,6 +7,7 @@ import net.broadcast.chatting.domain.channel.domain.Channel;
 
 import lombok.Getter;
 
+@Deprecated
 @Getter
 public class ChannelInfoResponse {
 
