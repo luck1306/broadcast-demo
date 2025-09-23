@@ -71,6 +71,6 @@ const gotRemoteStream = (e) => {
   remotePlayer.play();
 };
 
-export default {
+export {
   settingViewerPC,
 };

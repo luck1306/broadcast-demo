@@ -1,6 +1,8 @@
 import request from "./BaseApi";
 
-export default async () => {
+const LogoutApi = async () => {
     await request.delete("/users/logout");
     return null;
 };
+
+export default LogoutApi;

@@ -95,7 +95,7 @@ const joinInWs = (props) => {
     );
 };
 
-export default {
+export {
     PCInit,
     userInfoConfirm,
     getStream,
