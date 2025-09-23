@@ -3,6 +3,7 @@ package net.broadcast.chatting.domain.channel.presentation;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +13,6 @@ import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelIn
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,9 +35,9 @@ public class ChannelController {
         return channelService.getOnAirChannels();
     }
     
-    @GetMapping("/search/{channelName}")
-    public ChannelInfoResponse searchByChannelName(@PathVariable String channelName) {
-        return channelService.searchByChannelName(channelName);
+    @GetMapping("/search")
+    public ChannelInfoResponse searchByChannelName(@RequestParam String query) {
+        return channelService.searchByChannelName(query);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

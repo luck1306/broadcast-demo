@@ -42,7 +42,9 @@ public class ChannelService {
     }
 
     public ChannelInfoResponse searchByChannelName(String channelName) {
-        Channel cn = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
+        List<Channel> cn = channelRepository.findByChannelNameFragment(channelName);
+        if (cn.isEmpty()) throw ChannelNotFoundException.EXCEPTION;
+
         return new ChannelInfoResponse(cn);
     }
 

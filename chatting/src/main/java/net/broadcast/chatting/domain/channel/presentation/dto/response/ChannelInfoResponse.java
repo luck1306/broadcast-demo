@@ -1,25 +1,31 @@
 package net.broadcast.chatting.domain.channel.presentation.dto.response;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import net.broadcast.chatting.domain.channel.domain.Channel;
 
-@lombok.Getter
-public class ChannelInfoResponse {
-    String channelName;
-    UUID channelId;
-    boolean liveStatus;
+import lombok.Getter;
 
-    @lombok.Builder
-    public ChannelInfoResponse(String channelName, UUID channUuid, boolean liveStatus) {
-        this.channelName = channelName;
-        this.channelId = channUuid;
-        this.liveStatus = liveStatus;
+@Getter
+public class ChannelInfoResponse {
+
+    final List<ChannelInfo> channels;
+
+    public ChannelInfoResponse(List<Channel> channels) {
+        this.channels = channels.stream()
+                .map(ChannelInfo::new)
+                .collect(Collectors.toList()); // or .toList() on Java 16+
     }
 
-    public ChannelInfoResponse(Channel channel) {
-        this.channelName = channel.getChannelName();
-        this.channelId = channel.getId();
-        this.liveStatus = channel.isLiveStatus();
+    @Getter
+    public static class ChannelInfo {
+        final String channelName;
+        final boolean liveStatus;
+
+        public ChannelInfo(Channel channel) {
+            this.channelName = channel.getChannelName();
+            this.liveStatus = channel.isLiveStatus();
+        }
     }
 }
