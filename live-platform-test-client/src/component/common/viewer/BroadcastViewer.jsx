@@ -109,9 +109,9 @@ const BroadcastViewer = () => {
                 autoPlay
                 onClick={(e) => console.log(e)}
             ></video>
-            <button onClick={() => console.log(peerConnection.current)}>
+            {/* <button onClick={() => console.log(peerConnection.current)}>
                 rtcpeerconnecton
-            </button>
+            </button> */}
             <button onClick={() => setMuted(false)}>sound enable</button>
         </>
     );

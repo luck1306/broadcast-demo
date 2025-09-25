@@ -64,7 +64,7 @@ const getStream = async (mediaStream) => {
     console.log("getStraem invoked");
     mediaStream.current = await navigator.mediaDevices.getUserMedia({
         video: true,
-        // audio: true,
+        audio: true,
     });
     const video = document.getElementById("streamed-video");
     video.srcObject = mediaStream.current;

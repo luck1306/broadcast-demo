@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const LoginPage = () => {
-    // const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         accountId: "",
         password: "",
@@ -72,7 +71,7 @@ const LoginPage = () => {
             </button>
             <br />
             <button>
-                <Link to="/">회원가입</Link>
+                <Link to="/join">회원가입</Link>
             </button>
             <br />
         </div>

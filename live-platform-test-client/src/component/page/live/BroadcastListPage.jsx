@@ -31,7 +31,9 @@ const BroadCastListPage = () => {
             <div className="live-list">
                 <ul style={{ listStyleType: "none", padding: 0 }}>
                     {cnlist.length === 0 ? (
-                        <li>채널을 찾을 수 없거나, 방송중인 채널이 없습니다.</li>
+                        <li>
+                            채널을 찾을 수 없거나, 방송중인 채널이 없습니다.
+                        </li>
                     ) : (
                         cnlist.map((cn) => (
                             <BroadcastListElement

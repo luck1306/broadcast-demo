@@ -174,10 +174,10 @@ const StreamerDashBoard = () => {
                     muted
                 ></video>
                 {/* <button onClick={() => console.log(mediaStream)}>MediaStream</button> */}
-                <button onClick={() => console.log(`${channelName} ${userId}`)}>
+                {/* <button onClick={() => console.log(`${channelName} ${userId}`)}>
                     asdf
                 </button>
-                <button onClick={() => console.log(pcs.current)}>pcs</button>
+                <button onClick={() => console.log(pcs.current)}>pcs</button> */}
             </div>
         </div>
     );
