@@ -2,12 +2,14 @@ import { useEffect, useState, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
 
 const ChattingBox = () => {
     const clientRef = useRef(null);
     const [inputMessage, setInputMessage] = useState("");
     // const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
     const [token, setToken] = useState(Cookies.get("accessToken"));
+    const { channelNames } = useParams();
 
     // useEffect(() => {
     //     axios.get("http://localhost:8080/csrf").then((res) => {
@@ -59,9 +61,9 @@ const ChattingBox = () => {
         };
     }, []);
     const sendMessage = () => {
-        const destination = "/app/message/woonil_channel";
+        const destination = `/app/message/${channelNames}`;
         const body = {
-            sender: "theodore",
+            sender: Cookies.get("nickname"),
             message: inputMessage,
         };
         if (clientRef.current && clientRef.current.connected) {
