@@ -3,13 +3,15 @@ import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
+import GetRecentlyChats from "../../../library/api/GetRecentlyChats";
 
 const ChattingBox = () => {
     const clientRef = useRef(null);
     const [inputMessage, setInputMessage] = useState("");
     // const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
     const [token, setToken] = useState(Cookies.get("accessToken"));
-    const { channelNames } = useParams();
+    const { channelName } = useParams();
+    const [chattingList, setChattingList] = useState([]);
 
     // useEffect(() => {
     //     axios.get("http://localhost:8080/csrf").then((res) => {
@@ -30,15 +32,20 @@ const ChattingBox = () => {
             debug: (str) => console.log("[STOMP]", str),
             onConnect: () => {
                 console.log("O STOMP connection success!");
-                client.subscribe("/sub/chat/woonil_channel", (msg) => {
+                client.subscribe(`/sub/chat/${channelName}`, (msg) => {
                     console.log("[SUBSCRIBE]");
                     console.log(msg);
                     console.log("[---------]");
+                    setChattingList((prev) => [...prev, JSON.parse(msg.body)]);
                 });
                 client.subscribe("/sub/error", (msg) => {
                     console.log("[ERROR]");
                     console.log(msg);
                     console.log("[---------]");
+                });
+                GetRecentlyChats({ channelName }).then((res) => {
+                    const body = res.data;
+                    setChattingList(body.chats);
                 });
             },
             onStompError: (frame) => {
@@ -61,7 +68,7 @@ const ChattingBox = () => {
         };
     }, []);
     const sendMessage = () => {
-        const destination = `/app/message/${channelNames}`;
+        const destination = `/app/message/${channelName}`;
         const body = {
             sender: Cookies.get("nickname"),
             message: inputMessage,
@@ -77,6 +84,7 @@ const ChattingBox = () => {
         } else {
             console.warn("! STOMP client isn't connect yet");
         }
+        setInputMessage("");
     };
 
     const causeError = () => {
@@ -98,7 +106,13 @@ const ChattingBox = () => {
             className="chatting-box"
             style={{ border: "1px solid black", padding: "10px", width: "50%" }}
         >
-            <ul id="chatList"></ul>
+            <ul id="chatList">
+                {chattingList.map((chat, index) => (
+                    <li key={index}>
+                        {chat.sender}: {chat.message}
+                    </li>
+                ))}
+            </ul>
             <input
                 type="text"
                 placeholder="채팅을 입력해주세요"
