@@ -14,13 +14,13 @@ const BroadcastViewer = () => {
     const userId = receivedState + "#" + crypto.randomUUID().slice(0, 4);
 
     const addCandidate = (cd) => {
-        console.log(
-            `addCandidate invoked ${
-                peerConnection.current.remoteDescription
-                    ? "[add in pc]"
-                    : "[push in queue]"
-            }`
-        );
+        // console.log(
+        //     `addCandidate invoked ${
+        //         peerConnection.current.remoteDescription
+        //             ? "[add in pc]"
+        //             : "[push in queue]"
+        //     }`
+        // );
         if (peerConnection.current.remoteDescription === null)
             iceCandidateQueue.current.push(cd);
         else peerConnection.current.addIceCandidate(cd);
@@ -29,23 +29,23 @@ const BroadcastViewer = () => {
     useEffect(() => {
         const signalingSocket = new WebSocket(URL_WEB_SOCKET);
         signalingSocket.onopen = () => {
-            console.log("WebSocket opened");
+            // console.log("WebSocket opened");
             ws.current = signalingSocket;
             signalingSocket.send(
                 JSON.stringify({ type: "join", body: { channelName, userId } })
             );
         };
         signalingSocket.onclose = () => {
-            console.log("WebSocket closed");
+            // console.log("WebSocket closed");
         };
         signalingSocket.onmessage = async (message) => {
-            console.log("WebSocket message received");
+            // console.log("WebSocket message received");
             // console.log(message.data);
             const msg = JSON.parse(message.data);
             const body = msg.body;
             switch (msg.type) {
                 case "joined": {
-                    console.log("User enter channel " + channelName);
+                    // console.log("User enter channel " + channelName);
                     settingViewerPC(
                         peerConnection.current,
                         channelName,
@@ -55,26 +55,24 @@ const BroadcastViewer = () => {
                     break;
                 }
                 case "answer_sdp_received": {
-                    console.log("received success answer sdp");
-                    console.log(msg);
+                    // console.log("received success answer sdp");
+                    // console.log(msg);
                     await peerConnection.current.setRemoteDescription(body);
                     iceCandidateQueue.current.forEach((e) => {
-                        console.log(
-                            `addCandidate invoked ${
-                                peerConnection.current.remoteDescription
-                                    ? "[add in pc]"
-                                    : "[push in queue]"
-                            }`
-                        );
-                        // if (peerConnection.current.remoteDescription === null)
-                        //     console.log("add candidate in queue");
+                        // console.log(
+                        //     `addCandidate invoked ${
+                        //         peerConnection.current.remoteDescription
+                        //             ? "[add in pc]"
+                        //             : "[push in queue]"
+                        //     }`
+                        // );
                         peerConnection.current.addIceCandidate(e);
                     });
                     iceCandidateQueue.current = [];
                     break;
                 }
                 case "ice_candidate_received": {
-                    console.log("ice candidate received at streamer");
+                    // console.log("ice candidate received at streamer");
                     addCandidate(body);
                     break;
                 }
@@ -109,9 +107,6 @@ const BroadcastViewer = () => {
                 autoPlay
                 onClick={(e) => console.log(e)}
             ></video>
-            {/* <button onClick={() => console.log(peerConnection.current)}>
-                rtcpeerconnecton
-            </button> */}
             <button onClick={() => setMuted(false)}>sound enable</button>
         </>
     );

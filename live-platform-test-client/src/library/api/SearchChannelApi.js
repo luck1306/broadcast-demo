@@ -4,7 +4,7 @@ const SearchChannelApi = async (props) => {
     const res = await request.get(
         `/channels/search?query=${encodeURIComponent(props.cn)}`
     );
-    console.log(res);
+    // console.log(res);
     return res;
 };
 

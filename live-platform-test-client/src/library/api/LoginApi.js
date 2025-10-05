@@ -8,6 +8,6 @@ import request from "./BaseApi"
  */
 export default async function LoginApi (props) {
     const res = await request.post("/users/signin", props)
-    console.log(res);
+    // console.log(res);
     return res;
 }

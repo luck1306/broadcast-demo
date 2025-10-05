@@ -12,7 +12,6 @@ const BroadCastListPage = () => {
         setNickname(Cookies.get("nickname"));
 
         GetChannelsApi().then((res) => {
-            // axios get
             setCnlist(res.data["channelNames"] || []);
         });
         return () => {
@@ -22,7 +21,7 @@ const BroadCastListPage = () => {
         };
     }, []);
 
-    console.log("Signal Server URL: ", process.env.REACT_APP_SIGSERVER);
+    // console.log("Signal Server URL: ", process.env.REACT_APP_SIGSERVER);
 
     return (
         <>

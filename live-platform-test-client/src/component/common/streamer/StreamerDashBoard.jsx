@@ -1,20 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import {
     PCInit,
-    userInfoConfirm,
     userInfoInit,
     joinInWs,
 } from "../../../library/util/streamerUtil";
+import { useLocation, useParams } from "react-router-dom";
 
 const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
 
 const StreamerDashBoard = () => {
-    const [userId, setUserId] = useState("");
-    const [channelName, setChannelName] = useState("");
-    const [userInfoConfirmed, setUserInfoConfirmed] = useState(false);
+    const userId = useLocation().state + "#" + crypto.randomUUID().slice(0, 4);
+    const channelName = useParams();
     const [assignedAtWs, setAssignedAtWs] = useState(false);
-    const [confirmBtnDisabled, setConfirmBtnDisabled] = useState(true);
-    const [startBtnDisabled, setStartBtnDisabled] = useState(true);
 
     const mediaStream = useRef(null);
     const ws = useRef(null);
@@ -22,18 +19,18 @@ const StreamerDashBoard = () => {
     const iceCandidateQueue = useRef([]);
 
     const addCandidate = (cd, pc) => {
-        console.log(
-            `addCandidate invoked ${
-                pc?.remoteDescription ? "[add in pc]" : "[push in queue]"
-            }`
-        );
+        // console.log(
+        //     `addCandidate invoked ${
+        //         pc?.remoteDescription ? "[add in pc]" : "[push in queue]"
+        //     }`
+        // );
         if (!pc || pc?.remoteDescription === null)
             iceCandidateQueue.current.push(cd);
         else pc.addIceCandidate(cd);
     };
 
     const setAllCandidates = (pc) => {
-        console.log("setAllCandidates invoked");
+        // console.log("setAllCandidates invoked");
         iceCandidateQueue.current.forEach((cd) => {
             console.log("add candidate in queue");
             addCandidate(cd, pc);
@@ -45,20 +42,18 @@ const StreamerDashBoard = () => {
         const wsClient = new WebSocket(URL_WEB_SOCKET);
 
         wsClient.onopen = () => {
-            console.log("WebSocket opened");
+            // console.log("WebSocket opened");
             ws.current = wsClient;
             if (ws.current != null) setAssignedAtWs(true);
         };
 
-        wsClient.onclose = () => console.log("WebSocket closed");
+        // wsClient.onclose = () => console.log("WebSocket closed");
 
         return () => {
             wsClient.close(1000, "S"); // "S"treamer
             ws.current = null;
             setAssignedAtWs(false);
             userInfoInit({
-                setUserInfoConfirmed,
-                setStartBtnDisabled,
                 mediaStream: mediaStream.current,
             });
             for (const e of pcs.current.values()) e.close();
@@ -69,19 +64,18 @@ const StreamerDashBoard = () => {
     useEffect(() => {
         if (userId === "" || channelName === "") return;
         if (!assignedAtWs) return;
-        setConfirmBtnDisabled(false);
         ws.current.onmessage = async (msg) => {
             const parsedMessage = JSON.parse(msg.data);
-            console.log(`WebSocket message received: ${parsedMessage.type}`);
+            // console.log(`WebSocket message received: ${parsedMessage.type}`);
             const body = parsedMessage.body;
             switch (parsedMessage.type) {
                 case "joined": {
-                    console.log(`User enter channel ${channelName}`);
+                    // console.log(`User enter channel ${channelName}`);
                     break;
                 }
                 case "offer_sdp_received": {
                     const pc = new RTCPeerConnection();
-                    await pcs.current.set(body.sender, pc);
+                    pcs.current.set(body.sender, pc);
                     PCInit({
                         pc,
                         ws: ws.current,
@@ -96,7 +90,7 @@ const StreamerDashBoard = () => {
                 }
                 case "ice_candidate_received": {
                     // console.log(`ice candidate received at viewer ${body}`);
-                    console.log(body);
+                    // console.log(body);
                     addCandidate(body.candidate, pcs.current.get(body.sender));
                     break;
                 }
@@ -112,46 +106,7 @@ const StreamerDashBoard = () => {
                 <h1>Streamer's DashBoard</h1>
             </div>
             <div className="body">
-                <div id="input-area">
-                    <input
-                        className="streamer-input"
-                        type="text"
-                        placeholder="User ID"
-                        value={userId}
-                        onChange={(e) => setUserId(e.target.value)}
-                    />
-                    <br />
-                    <input
-                        className="streamer-input"
-                        type="text"
-                        placeholder="Channel Name"
-                        value={channelName}
-                        onChange={(e) => setChannelName(e.target.value)}
-                    />
-                </div>
                 <button
-                    disabled={confirmBtnDisabled}
-                    onClick={() => {
-                        if (userInfoConfirmed)
-                            userInfoInit({
-                                setUserInfoConfirmed,
-                                setStartBtnDisabled,
-                                mediaStream: mediaStream.current,
-                            });
-                        else
-                            userInfoConfirm({
-                                setStartBtnDisabled,
-                                setUserInfoConfirmed,
-                                setUserId,
-                                setChannelName,
-                                mediaStream,
-                            });
-                    }}
-                >
-                    {userInfoConfirmed ? "Cancel" : "Confirm"}
-                </button>
-                <button
-                    disabled={startBtnDisabled}
                     onClick={() =>
                         joinInWs({
                             ws: ws.current,
@@ -173,11 +128,6 @@ const StreamerDashBoard = () => {
                     autoPlay
                     muted
                 ></video>
-                {/* <button onClick={() => console.log(mediaStream)}>MediaStream</button> */}
-                {/* <button onClick={() => console.log(`${channelName} ${userId}`)}>
-                    asdf
-                </button>
-                <button onClick={() => console.log(pcs.current)}>pcs</button> */}
             </div>
         </div>
     );

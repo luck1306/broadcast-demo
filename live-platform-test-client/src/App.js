@@ -18,7 +18,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<RootPage />} />
                 <Route
-                    path="/broadcast"
+                    path="/broadcast/:channelName"
                     element={
                         <PrivateRoute>
                             <StreamerPage />
@@ -41,7 +41,6 @@ function App() {
                         </PrivateRoute>
                     }
                 />
-                {/* <Route path="/chatting" element={<ChattingBox />} /> */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/join" element={<JoiningMembershipPage />} />
                 <Route
@@ -57,9 +56,5 @@ function App() {
         </BrowserRouter>
     );
 }
-/**
-- 방송 페이지(수신자)
-- 방송 페이지(송신자)
-- react 페이지 인가 인터셉터
- */
+
 export default App;

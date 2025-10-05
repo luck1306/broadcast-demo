@@ -14,7 +14,7 @@ const request = axios.create({
 request.interceptors.request.use((config) => {
     // 요청을 보내기 전에 수행할 작업
     // 예: 토큰 갱신, 로딩 표시 등
-    console.log(config);
+    // console.log(config);
     return config;
 }, (error) => {
     // 요청 오류가 있는 경우 수행할 작업

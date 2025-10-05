@@ -4,7 +4,7 @@ import request from "./BaseApi"
 
 const GetChannelsApi = async () => {
     const res = await request.get("/channels/onair");
-    console.log(res);
+    // console.log(res);
     return res;
 }
 export default GetChannelsApi;

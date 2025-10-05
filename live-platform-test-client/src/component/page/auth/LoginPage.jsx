@@ -55,7 +55,7 @@ const LoginPage = () => {
                             );
                             Cookies.set(
                                 "nickname",
-                                parseJwt(res.data.accessToken)["sub"]
+                                parseJwt(res.data.accessToken)["sub"] // get logined user nickname
                             );
                             alert("로그인 성공");
                             navigate("/", { replace: true });

@@ -9,9 +9,10 @@ const ChattingBox = () => {
     const clientRef = useRef(null);
     const [inputMessage, setInputMessage] = useState("");
     // const [csrf, setCsrf] = useState([]); // [headerName, headerValue]
-    const [token, setToken] = useState(Cookies.get("accessToken"));
+    const [token, setToken] = useState("");
     const { channelName } = useParams();
     const [chattingList, setChattingList] = useState([]);
+    const URL_CHATTING_SERVER = process.env.REACT_APP_CHATTING_SERVER;
 
     // useEffect(() => {
     //     axios.get("http://localhost:8080/csrf").then((res) => {
@@ -23,25 +24,25 @@ const ChattingBox = () => {
 
     useEffect(() => {
         // if (csrf !== null && csrf !== undefined && csrf.length > 1) {
-        console.log(token);
+        setToken(Cookies.get("accessToken"));
+        // console.log(token);
         const client = new Client({
-            webSocketFactory: () =>
-                new SockJS("http://localhost:8080/chatting"),
+            webSocketFactory: () => new SockJS(URL_CHATTING_SERVER),
             // brokerURL: "ws://localhost:8080/chatting",
             reconnectDelay: 5000,
             debug: (str) => console.log("[STOMP]", str),
             onConnect: () => {
-                console.log("O STOMP connection success!");
+                // console.log("O STOMP connection success!");
                 client.subscribe(`/sub/chat/${channelName}`, (msg) => {
-                    console.log("[SUBSCRIBE]");
-                    console.log(msg);
-                    console.log("[---------]");
+                    // console.log("[SUBSCRIBE]");
+                    // console.log(msg);
+                    // console.log("[---------]");
                     setChattingList((prev) => [...prev, JSON.parse(msg.body)]);
                 });
                 client.subscribe("/sub/error", (msg) => {
-                    console.log("[ERROR]");
-                    console.log(msg);
-                    console.log("[---------]");
+                    // console.log("[ERROR]");
+                    // console.log(msg);
+                    // console.log("[---------]");
                 });
                 GetRecentlyChats({ channelName }).then((res) => {
                     const body = res.data;
@@ -50,7 +51,7 @@ const ChattingBox = () => {
             },
             onStompError: (frame) => {
                 console.error("X STOMP error", frame.headers["message"]);
-                console.error(frame);
+                // console.error(frame);
             },
             connectHeaders: {
                 Authorization: token,
@@ -78,7 +79,7 @@ const ChattingBox = () => {
                 destination,
                 body: JSON.stringify(body),
                 headers: {
-                    Authorization: "Bearer " + token,
+                    Authorization: token,
                 },
             });
         } else {
@@ -87,19 +88,19 @@ const ChattingBox = () => {
         setInputMessage("");
     };
 
-    const causeError = () => {
-        const dest = "/app/cause/exception";
-        if (clientRef.current && clientRef.current.connected) {
-            clientRef.current.publish({
-                destination: dest,
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-            });
-        } else {
-            console.warn("! STOMP client isn't connect yet");
-        }
-    };
+    // const causeError = () => {
+    //     const dest = "/app/cause/exception";
+    //     if (clientRef.current && clientRef.current.connected) {
+    //         clientRef.current.publish({
+    //             destination: dest,
+    //             headers: {
+    //                 Authorization: token,
+    //             },
+    //         });
+    //     } else {
+    //         console.warn("! STOMP client isn't connect yet");
+    //     }
+    // };
 
     return (
         <div
@@ -121,7 +122,6 @@ const ChattingBox = () => {
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
             <button onClick={sendMessage}>전송</button>
-            <button onClick={causeError}>에러유발</button>
         </div>
     );
 };

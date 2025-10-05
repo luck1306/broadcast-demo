@@ -1,8 +1,8 @@
 const PCInit = async (props) => {
-    console.log("PCInit invoked");
+    // console.log("PCInit invoked");
     await props.pc.setRemoteDescription(props.sdp);
     props.mediaStream.getTracks().forEach((track) => {
-        console.log(track);
+        // console.log(track);
         props.pc.addTrack(track, props.mediaStream);
     });
     props.pc
@@ -11,9 +11,9 @@ const PCInit = async (props) => {
 
     props.pc.onicecandidate = (e) => {
         const answer = props.pc?.localDescription;
-        console.log(
-            `gotLocalIceCandidateAnswer invoked: ${e.candidate} ${answer}`
-        );
+        // console.log(
+        //     `gotLocalIceCandidateAnswer invoked: ${e.candidate} ${answer}`
+        // );
 
         props.ws.send(
             JSON.stringify({
@@ -44,24 +44,8 @@ const PCInit = async (props) => {
     };
 };
 
-const userInfoConfirm = (props) => {
-    console.log("userInfoConfirm invoked");
-    const confirmed = window.confirm("Confirm your user information?");
-    if (confirmed) {
-        const inputs = document.getElementsByClassName("streamer-input");
-        for (const i of inputs) i.disabled = true;
-        getStream(props.mediaStream);
-        props.setStartBtnDisabled(false);
-        props.setUserInfoConfirmed(true);
-    } else {
-        window.alert("not confirmed");
-        props.setUserId("");
-        props.setChannelName("");
-    }
-};
-
 const getStream = async (mediaStream) => {
-    console.log("getStraem invoked");
+    // console.log("getStraem invoked");
     mediaStream.current = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
@@ -71,9 +55,7 @@ const getStream = async (mediaStream) => {
 };
 
 const userInfoInit = (props) => {
-    console.log("userInfoInit invoked");
-    props.setUserInfoConfirmed(false);
-    props.setStartBtnDisabled(true);
+    // console.log("userInfoInit invoked");
     const video = document.getElementById("streamed-video");
     // video.srcObject = null;
     video?.load();
@@ -83,7 +65,7 @@ const userInfoInit = (props) => {
 };
 
 const joinInWs = (props) => {
-    console.log("joinInWs invoked");
+    // console.log("joinInWs invoked");
     props.ws.send(
         JSON.stringify({
             type: "join",
@@ -95,10 +77,4 @@ const joinInWs = (props) => {
     );
 };
 
-export {
-    PCInit,
-    userInfoConfirm,
-    getStream,
-    userInfoInit,
-    joinInWs,
-};
+export { PCInit, getStream, userInfoInit, joinInWs };
