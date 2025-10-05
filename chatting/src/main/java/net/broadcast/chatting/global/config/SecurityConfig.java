@@ -59,6 +59,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/channels/all").authenticated()
                     .requestMatchers(HttpMethod.GET, "/channels/onair").authenticated()
                     .requestMatchers(HttpMethod.GET, "/channels/search").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/channels/info").authenticated()
                     .requestMatchers(HttpMethod.POST, "/channels/create").authenticated()
                     .requestMatchers(HttpMethod.PUT, "/channels/stream").authenticated()
 

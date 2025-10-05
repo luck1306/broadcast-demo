@@ -47,6 +47,12 @@ public class ChannelService {
         return new ChannelListResponse(cn);
     }
 
+    public String getChannelInfoAboutMe() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (user.getChannel() == null) return "";
+        return user.getChannel().getChannelName();
+    }
+
     public void createChannel(ChannelInfoRequest request) {
         User u = userRepository.findByNickname(request.getUserName()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
         Channel cn = Channel.builder()

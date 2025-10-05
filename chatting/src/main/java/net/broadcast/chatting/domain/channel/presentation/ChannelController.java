@@ -39,6 +39,11 @@ public class ChannelController {
         return channelService.searchByChannelName(query);
     }
 
+    @GetMapping("/info")
+    public String getChannelInfoAboutMe() {
+        return channelService.getChannelInfoAboutMe();
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
     public void createChannel(@RequestBody ChannelInfoRequest request) {

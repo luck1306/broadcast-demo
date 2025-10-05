@@ -1,5 +1,6 @@
 package net.broadcast.chatting.domain.chat.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class ChattingService {
         String channelName
     ) {
         Channel channel = channelRepository.findByChannelName(channelName).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
-        List<ChatMessageDto> lists = chatRepository.enterChannelWithRecently(channel);
+        List<ChatMessageDto> lists = chatRepository.enterChannelWithRecently(channel, LocalDateTime.now().minusHours(1));
         log.info(lists.toString());
         return new ChatsResponse(lists);
     }
