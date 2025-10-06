@@ -10,6 +10,7 @@ import StreamerPage from "./component/page/live/StreamerPage.jsx";
 import LogoutPage from "./component/page/auth/LogoutPage.jsx";
 import ViewerPage from "./component/page/live/ViewerPage.jsx";
 import PrivateRoute from "./component/page/auth/PrivateRoute.jsx";
+import CreateChannel from "./component/page/auth/CreateChannel.jsx";
 
 function App() {
     return (
@@ -43,6 +44,14 @@ function App() {
                 />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/join" element={<JoiningMembershipPage />} />
+                <Route
+                    path="/channel/join"
+                    element={
+                        <PrivateRoute>
+                            <CreateChannel />
+                        </PrivateRoute>
+                    }
+                />
                 <Route
                     path="/logout"
                     element={

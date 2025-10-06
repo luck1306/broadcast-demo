@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import GetChannelName from "../../../library/api/GetChannelName";
 
 const Header = () => {
-    const [nickname, setNickname] = useState(Cookies.get("nickname") || "");
     const [myCnName, setMyCnName] = useState("");
 
     useEffect(() => {
@@ -25,15 +24,14 @@ const Header = () => {
             | <Link to="/">홈</Link> |{" "}
             {Cookies.get("accessToken") ? (
                 <>
-                    {myCnName && (
+                    {myCnName ? (
                         <>
-                            <Link
-                                to={`/broadcast/${myCnName}`}
-                                state={nickname}
-                            >
-                                방송하기
-                            </Link>{" "}
+                            <Link to={`/broadcast/${myCnName}`}>방송하기</Link>{" "}
                             |
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/channel/join">채널만들기</Link> |
                         </>
                     )}
                     <Link to="/live-list">방송보기</Link> |{" "}

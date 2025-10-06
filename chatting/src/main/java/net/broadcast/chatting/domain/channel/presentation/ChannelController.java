@@ -8,12 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import net.broadcast.chatting.domain.channel.presentation.dto.request.ChannelInfoRequest;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -46,8 +44,8 @@ public class ChannelController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/create")
-    public void createChannel(@RequestBody ChannelInfoRequest request) {
-        channelService.createChannel(request);
+    public void createChannel(@RequestParam String channelName) {
+        channelService.createChannel(channelName);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

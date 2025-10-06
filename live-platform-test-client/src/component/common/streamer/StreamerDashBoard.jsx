@@ -4,12 +4,14 @@ import {
     userInfoInit,
     joinInWs,
 } from "../../../library/util/streamerUtil";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
 
 const StreamerDashBoard = () => {
-    const userId = useLocation().state + "#" + crypto.randomUUID().slice(0, 4);
+    const userId =
+        Cookies.get("nickname") + "#" + crypto.randomUUID().slice(0, 4);
     const channelName = useParams();
     const [assignedAtWs, setAssignedAtWs] = useState(false);
 

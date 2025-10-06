@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.channel.domain.Channel;
 import net.broadcast.chatting.domain.channel.domain.repository.ChannelRepository;
+import net.broadcast.chatting.domain.channel.exception.AlreadyExistChannelException;
 import net.broadcast.chatting.domain.channel.exception.ChannelNotFoundException;
-import net.broadcast.chatting.domain.channel.presentation.dto.request.ChannelInfoRequest;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 import net.broadcast.chatting.domain.user.domain.User;
 import net.broadcast.chatting.domain.user.domain.repository.UserRepository;
 import net.broadcast.chatting.domain.user.exception.NoSuchUserException;
+import net.broadcast.chatting.domain.user.exception.NotLoginCurrentException;
 
 @RequiredArgsConstructor
 @Service
@@ -53,10 +54,12 @@ public class ChannelService {
         return user.getChannel().getChannelName();
     }
 
-    public void createChannel(ChannelInfoRequest request) {
-        User u = userRepository.findByNickname(request.getUserName()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
+    public void createChannel(String channelName) {
+        User u = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (u == null) throw NotLoginCurrentException.EXCPETION;
+        if (channelRepository.findByChannelName(channelName).isPresent() || channelRepository.findByUser(u).isPresent()) throw AlreadyExistChannelException.EXCEPTION;
         Channel cn = Channel.builder()
-            .channelName(request.getChannelName())
+            .channelName(channelName)
             .liveStatus(false)
             .user(u)
             .build();
