@@ -28,19 +28,19 @@ app.use((req, res, next) => {
 signaling.init(server);
 // chatting.execute(server);
 
-// app.get("/channels", (req, res) => {
-//     const response = {
-//         channels: Object.keys(signaling.channels).map((channelName) => ({
-//             channelName,
-//             users: Object.keys(signaling.channels[channelName]),
-//         })),
-//     };
-//     res.json(response);
-// });
+app.get("/channels", (req, res) => {
+    const response = {
+        channels: Object.keys(signaling.channels).map((channelName) => ({
+            channelName,
+            users: Object.keys(signaling.channels[channelName]),
+        })),
+    };
+    res.json(response);
+});
 
-// app.get("/hostList", (req, res) => {
-//     res.json({ hostList: signaling.hostList });
-// });
+app.get("/hostList", (req, res) => {
+    res.json({ hostList: signaling.hostList });
+});
 
 // init the http server on 4040
 server.listen(HTTPPORT, () => {
