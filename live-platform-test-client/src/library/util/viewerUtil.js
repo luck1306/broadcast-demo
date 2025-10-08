@@ -68,7 +68,7 @@ const gotRemoteStream = (e) => {
     if (remotePlayer instanceof HTMLVideoElement) {
         remotePlayer.srcObject = e.streams[0];
     } else console.log("remotePlayer is not an HTMLVideoElement");
-    remotePlayer.play();
+    // remotePlayer.play();
 };
 
 export { settingViewerPC };

@@ -1,18 +1,20 @@
 import { useState, useRef, useEffect } from "react";
 import {
     PCInit,
+    getStream,
     userInfoInit,
     joinInWs,
 } from "../../../library/util/streamerUtil";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import StreamStatSwitchApi from "../../../library/api/StreamStatSwitchApi";
 
 const URL_WEB_SOCKET = process.env.REACT_APP_SIGSERVER;
 
 const StreamerDashBoard = () => {
     const userId =
         Cookies.get("nickname") + "#" + crypto.randomUUID().slice(0, 4);
-    const channelName = useParams();
+    const { channelName } = useParams();
     const [assignedAtWs, setAssignedAtWs] = useState(false);
 
     const mediaStream = useRef(null);
@@ -34,7 +36,7 @@ const StreamerDashBoard = () => {
     const setAllCandidates = (pc) => {
         // console.log("setAllCandidates invoked");
         iceCandidateQueue.current.forEach((cd) => {
-            console.log("add candidate in queue");
+            // console.log("add candidate in queue");
             addCandidate(cd, pc);
         });
         iceCandidateQueue.current = [];
@@ -60,6 +62,7 @@ const StreamerDashBoard = () => {
             });
             for (const e of pcs.current.values()) e.close();
             pcs.current = new Map();
+            StreamStatSwitchApi({ stat: 0 });
         };
     }, []);
 
@@ -68,7 +71,7 @@ const StreamerDashBoard = () => {
         if (!assignedAtWs) return;
         ws.current.onmessage = async (msg) => {
             const parsedMessage = JSON.parse(msg.data);
-            // console.log(`WebSocket message received: ${parsedMessage.type}`);
+            console.log(`WebSocket message received: ${parsedMessage.type}`);
             const body = parsedMessage.body;
             switch (parsedMessage.type) {
                 case "joined": {
@@ -109,13 +112,16 @@ const StreamerDashBoard = () => {
             </div>
             <div className="body">
                 <button
-                    onClick={() =>
+                    onClick={() => {
+                        // console.log(channelName);
                         joinInWs({
                             ws: ws.current,
                             channelName,
                             userId,
-                        })
-                    }
+                        });
+                        getStream(mediaStream);
+                        StreamStatSwitchApi({ stat: 1 });
+                    }}
                 >
                     Streaming Start !!!
                 </button>

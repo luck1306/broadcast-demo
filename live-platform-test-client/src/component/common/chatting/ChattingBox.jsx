@@ -30,7 +30,7 @@ const ChattingBox = () => {
             webSocketFactory: () => new SockJS(URL_CHATTING_SERVER),
             // brokerURL: "ws://localhost:8080/chatting",
             reconnectDelay: 5000,
-            debug: (str) => console.log("[STOMP]", str),
+            // debug: (str) => console.log("[STOMP]", str),
             onConnect: () => {
                 // console.log("O STOMP connection success!");
                 client.subscribe(`/sub/chat/${channelName}`, (msg) => {
