@@ -44,3 +44,6 @@ out/
 *-dev.properties
 *-prod.yml
 *-prod.properties
+
+*.pem
+*.p12
