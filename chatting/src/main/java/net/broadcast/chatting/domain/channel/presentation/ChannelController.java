@@ -50,8 +50,8 @@ public class ChannelController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/stream")
-    public void notStreamStat() {
-        channelService.notStreamStat();
+    public void notStreamStat(@RequestParam int stat) {
+        channelService.notStreamStat(stat);
     }
     
 }

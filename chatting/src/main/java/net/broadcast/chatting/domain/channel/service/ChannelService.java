@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.channel.domain.Channel;
 import net.broadcast.chatting.domain.channel.domain.repository.ChannelRepository;
@@ -66,10 +67,11 @@ public class ChannelService {
         channelRepository.save(cn);
     }
 
-    public void notStreamStat() {
+    @Transactional
+    public void notStreamStat(int stat) {
         UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByNickname(details.getUsername()).orElseThrow(() -> NoSuchUserException.EXCEPTION);
         Channel channel = channelRepository.findByUser(user).orElseThrow(() -> ChannelNotFoundException.EXCEPTION);
-        channelRepository.save(channel.switchStat());
+        channelRepository.save(channel.switchStat(stat));
     }
 }
