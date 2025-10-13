@@ -18,6 +18,13 @@ const signaling = require("./signaling");
 const HTTPPORT = 4040;
 
 app.use((req, res, next) => {
+    if (req.secure || req.get("X-Forwarded-Proto" === "https")) {
+        return next();
+    }
+    res.redirect("https://" + req.headers.host + req.url);
+});
+
+app.use((req, res, next) => {
     res.setTimeout(30000);
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
     res.header("Access-Control-Allow-Origin", "*");
