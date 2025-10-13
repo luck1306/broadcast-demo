@@ -17,6 +17,8 @@ const signaling = require("./signaling");
 
 const HTTPPORT = 4040;
 
+app.set("trust proxy", true);
+
 app.use((req, res, next) => {
     if (req.secure || req.get("X-Forwarded-Proto" === "https")) {
         return next();
