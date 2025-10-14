@@ -1,12 +1,9 @@
-import ChattingBox from "../../common/chatting/ChattingBox";
 import BroadcastViewer from "../../common/viewer/BroadcastViewer";
 
 const ViewerPage = () => {
     return (
         <div className="viewer-page">
-            <h1>Viewer Page</h1>
             <BroadcastViewer />
-            <ChattingBox />
         </div>
     );
 };

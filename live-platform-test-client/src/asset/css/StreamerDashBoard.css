@@ -1,0 +1,147 @@
+/* 기본 레이아웃 */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: #f8f9fb;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #222;
+}
+
+/* 헤더 영역 */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    color: #333;
+}
+
+.dashboard-header p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* 비디오 섹션 */
+.video-section {
+    width: 640px;
+    height: 480px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stream-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 버튼 영역 */
+.controls {
+    margin-top: 1.5rem;
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    padding: 0.8rem 1.6rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.start-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.start-btn:hover {
+    background-color: #005ecb;
+}
+
+.stop-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.stop-btn:hover {
+    background-color: #b72836;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .video-section {
+        width: 90%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* layout container */
+.dashboard-container,
+.viewer-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #0d1117;
+  color: white;
+  min-height: 100vh;
+}
+
+/* stream or video section */
+.stream-section,
+.viewer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stream-section video,
+.viewer-content video {
+  width: 640px;
+  height: 480px;
+  border-radius: 8px;
+  background-color: black;
+  border: 1px solid #30363d;
+}
+
+button {
+  margin-top: 1rem;
+  background-color: #238636;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2ea043;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-container,
+  .viewer-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+}

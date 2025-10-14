@@ -1,0 +1,121 @@
+.viewer-container {
+  background-color: #0d1117;
+  color: #f0f6fc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.viewer-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.viewer-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  color: #58a6ff;
+}
+
+.viewer-greeting {
+  color: #8b949e;
+  font-size: 1rem;
+}
+
+.viewer-video-box {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.viewer-video {
+  width: 640px;
+  height: 480px;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.unmute-btn {
+  background-color: #238636;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.unmute-btn:hover {
+  background-color: #2ea043;
+}
+
+@media (max-width: 768px) {
+  .viewer-video {
+    width: 90%;
+    height: auto;
+  }
+}
+
+/* layout container */
+.dashboard-container,
+.viewer-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: #0d1117;
+  color: white;
+  min-height: 100vh;
+}
+
+/* stream or video section */
+.stream-section,
+.viewer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stream-section video,
+.viewer-content video {
+  width: 640px;
+  height: 480px;
+  border-radius: 8px;
+  background-color: black;
+  border: 1px solid #30363d;
+}
+
+button {
+  margin-top: 1rem;
+  background-color: #238636;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2ea043;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-container,
+  .viewer-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+}

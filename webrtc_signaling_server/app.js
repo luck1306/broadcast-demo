@@ -4,37 +4,37 @@
 const app = require("express")();
 const fs = require("fs");
 const path = require("path");
-const server = require("http").createServer(
-    // {
-    //     cert: fs.readFileSync(path.join(__dirname, "./app.pem")),
-    //     key: fs.readFileSync(path.join(__dirname, "./app-key.pem")),
-    // },
+const server = require("https").createServer(
+    {
+        cert: fs.readFileSync(path.join(__dirname, "./app.pem")),
+        key: fs.readFileSync(path.join(__dirname, "./app-key.pem")),
+    },
     app
 );
 const debug = require("debug")(`${process.env.APPNAME}:app`);
 const signaling = require("./signaling");
 // const chatting = require("./chatting");
-const { createProxyMiddleware } = require("http-proxy-middleware");
+// const { createProxyMiddleware } = require("http-proxy-middleware");
 
-const HTTPPORT = 80;
-const APIPROXY = createProxyMiddleware({
-    target: "http://localhost:8080",
-    pathFilter: ["/chat"],
-    changeOrigin: true,
-    ws: true,
-    pathRewrite: {
-        "^/chat": "/",
-    },
-});
+const HTTPPORT = 4040;
+// const APIPROXY = createProxyMiddleware({
+//     target: "http://localhost:8080",
+//     pathFilter: ["/chat"],
+//     changeOrigin: true,
+//     ws: true,
+//     pathRewrite: {
+//         "^/chat": "/",
+//     },
+// });
 
-app.set("trust proxy", true);
+// app.set("trust proxy", true);
 
-app.use((req, res, next) => {
-    if (req.secure || req.get("X-Forwarded-Proto" === "https")) {
-        return next();
-    }
-    res.redirect("https://" + req.headers.host + req.url);
-});
+// app.use((req, res, next) => {
+//     if (req.secure || req.get("X-Forwarded-Proto" === "https")) {
+//         return next();
+//     }
+//     res.redirect("https://" + req.headers.host + req.url);
+// });
 
 app.use((req, res, next) => {
     res.setTimeout(30000);
@@ -44,7 +44,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(APIPROXY);
+// app.use(APIPROXY);
 
 signaling.init(server);
 // chatting.execute(server);

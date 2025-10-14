@@ -10,7 +10,7 @@ public class WebMvcConfig implements org.springframework.web.servlet.config.anno
         org.springframework.web.servlet.config.annotation.CorsRegistry registry
     ) {
         registry.addMapping("/**")
-            .allowedOriginPatterns("http://localhost")
+            .allowedOriginPatterns("https://localhost:3000")
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
             .allowCredentials(true)
