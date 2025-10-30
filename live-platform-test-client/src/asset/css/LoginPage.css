@@ -1,0 +1,97 @@
+.login-page-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #1f1f1f;
+}
+
+.login-page-red-box {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 40vw;
+    background-color: #de434d;
+    box-shadow: inset 30px 0 50px -30px #1f1f1f;
+}
+
+.login-page-content-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #eaeaea;
+    gap: 10vh;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.login-page-content-container > div {
+    width: 35vw;
+    border-radius: 1em;
+    padding-bottom: 32px;
+}
+
+.login-input-box-container {
+    background-color: #eaeaea;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #1f1f1f;
+    padding-top: 2em;
+    box-sizing: border-box;
+}
+
+.login-input-box-container > h2 {
+    margin: 0;
+    padding: 0;
+    padding-top: 12px;
+    padding-bottom: 18px;
+    font-size: 24px;
+}
+
+.login-input-box-container > p {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+.login-page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.login-input-container {
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    row-gap: 24px;
+}
+
+.login-input {
+    width: 80%;
+    padding: 18px 24px;
+    box-sizing: border-box;
+    border-radius: 18px;
+    border: none;
+}
+
+.login-button {
+    display: flex;
+    width: 80%;
+    align-items: flex-end;
+    flex-direction: column;
+    row-gap: 18px;
+}
+
+.signin-text {
+    font-size: 12px;
+}
+
+.login-button > button {
+    background-color: #de434d;
+}
