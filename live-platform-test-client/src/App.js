@@ -14,7 +14,7 @@ import CreateChannel from "./component/page/auth/CreateChannel.jsx";
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.REACT_APP_PUBLIC_URL}>
             <Header></Header>
             <Routes>
                 <Route path="/" element={<RootPage />} />
