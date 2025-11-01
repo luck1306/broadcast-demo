@@ -1,0 +1,9 @@
+*.env*
+/node_modules
+*.pem
+Dockerfile
+.gitignore
+.dockerignore
+public/*.webp
+public/*2.png
+*copyed-dir-by-origin*
