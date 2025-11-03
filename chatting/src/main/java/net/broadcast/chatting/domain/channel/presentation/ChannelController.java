@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import net.broadcast.chatting.domain.channel.presentation.dto.response.ChannelListResponse;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -37,9 +38,9 @@ public class ChannelController {
         return channelService.searchByChannelName(query);
     }
 
-    @GetMapping("/info")
-    public String getChannelInfoAboutMe() {
-        return channelService.getChannelInfoAboutMe();
+    @GetMapping("/info/{nickname}")
+    public String getChannelInfoAboutMe(@PathVariable String nickname) {
+        return channelService.getChannelInfoAboutMe(nickname);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

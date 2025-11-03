@@ -49,8 +49,9 @@ public class ChannelService {
         return new ChannelListResponse(cn);
     }
 
-    public String getChannelInfoAboutMe() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String getChannelInfoAboutMe(String nickname) {
+        //User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByNickname(nickname).orElseThrow(() -> NoSuchUserException.EXCEPTION);
         if (user.getChannel() == null) return "";
         return user.getChannel().getChannelName();
     }
