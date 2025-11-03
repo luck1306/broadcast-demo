@@ -60,8 +60,10 @@ const userInfoInit = (props) => {
     // video.srcObject = null;
     video?.load();
     props.mediaStream = null;
-    const inputs = document.getElementsByClassName("streamer-input");
-    for (const i of inputs) i.disabled = false;
+
+    // unused
+    // const inputs = document.getElementsByClassName("streamer-input");
+    // for (const i of inputs) i.disabled = false;
 };
 
 const joinInWs = (props) => {

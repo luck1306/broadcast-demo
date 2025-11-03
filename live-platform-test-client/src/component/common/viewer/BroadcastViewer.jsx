@@ -59,7 +59,7 @@ const BroadcastViewer = () => {
           alert("스트리머가 방송을 종료했습니다.");
           signalingSocket.close();
           ws.current = null;
-          window.location.href = "/live-list";
+          window.location.replace("/");
           break;
         }
         default:

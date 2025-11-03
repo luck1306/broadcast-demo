@@ -137,6 +137,12 @@ button:hover {
   background-color: #2ea043;
 }
 
+button:disabled {
+  color: gray;
+  opacity: 0.5;
+}
+
+
 /* Responsive */
 @media (max-width: 900px) {
   .dashboard-container,
