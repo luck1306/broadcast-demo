@@ -10,8 +10,7 @@ const Header = () => {
 
   useEffect(() => {
     if (token.accessToken === "") return;
-    console.log(token);
-
+    
     GetChannelName({ nickname: token.nickname })
       .then((res) => setMyCnName(res.data))
       .catch((err) => {
