@@ -4,6 +4,7 @@
     "private": true,
     "homepage": "https://luck1306.github.io",
     "dependencies": {
+        "@reduxjs/toolkit": "^2.9.2",
         "@stomp/stompjs": "^7.1.1",
         "@testing-library/dom": "^10.4.0",
         "@testing-library/jest-dom": "^6.6.3",
@@ -14,15 +15,17 @@
         "js-cookie": "^3.0.5",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
+        "react-redux": "^9.2.0",
         "react-router-dom": "^7.7.0",
         "react-scripts": "5.0.1",
+        "redux": "^5.0.1",
         "socket.io-client": "^4.8.1",
         "sockjs-client": "^1.6.1",
         "web-vitals": "^2.1.4",
         "ws": "^8.18.3"
     },
     "scripts": {
-        "start": "react-scripts start",
+        "start": "export HTTPS=true&&export SSL_CRT_FILE=./app.pem&&export SSL_KEY_FILE=app-key.pem&&react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
