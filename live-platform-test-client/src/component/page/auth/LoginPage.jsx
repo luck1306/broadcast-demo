@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import "../../../asset/css/LoginPage.css";
 import { Space } from "antd";
+import { useDispatch } from "react-redux";
+import { setTokens } from "../../../redux/tokenSlice";
 
 const LoginPage = () => {
     const [userInfo, setUserInfo] = useState({
@@ -11,6 +13,7 @@ const LoginPage = () => {
         password: "",
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const parseJwt = (token) => {
         try {
@@ -62,7 +65,7 @@ const LoginPage = () => {
                             />
                             <div className="login-button">
                                 <button
-                                    onClick={async () => {
+                                    onClick={() => {
                                         // console.log(userInfo);
                                         LoginApi(userInfo)
                                             .then((res) => {
@@ -83,10 +86,23 @@ const LoginPage = () => {
                                                         res.data.accessToken
                                                     )["sub"] // get logined user nickname
                                                 );
+                                                dispatch(
+                                                    setTokens({
+                                                        accessToken:
+                                                            "Bearer " +
+                                                            res.data
+                                                                .accessToken,
+                                                        refreshToken:
+                                                            "Bearer " +
+                                                            res.data
+                                                                .refreshToken,
+                                                        nickname: parseJwt(
+                                                            res.data.accessToken
+                                                        )["sub"],
+                                                    })
+                                                );
                                                 alert("로그인 성공");
-                                                navigate("/", {
-                                                    replace: true,
-                                                });
+                                                window.location.replace("/");
                                             })
                                             .catch((err) => {
                                                 alert(

@@ -3,6 +3,11 @@ import Cookies from "js-cookie";
 
 const AuthContext = createContext();
 
+/**
+ * @deprecated 상태관리를 위해 Redux를 사용하므로 더이상 사용하지 않습니다.
+ * @param {*} param0 
+ * @returns 
+ */
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 

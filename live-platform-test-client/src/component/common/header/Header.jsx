@@ -1,25 +1,24 @@
-import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GetChannelName from "../../../library/api/GetChannelName";
 import "../../../asset/css/Header.css";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [myCnName, setMyCnName] = useState("");
+  const token = useSelector((state) => state.token.value);
 
   useEffect(() => {
-    const token = Cookies.get("accessToken");
-    if (!token) return;
+    if (token.accessToken === "") return;
+    console.log(token);
 
-    GetChannelName()
+    GetChannelName({ nickname: token.nickname })
       .then((res) => setMyCnName(res.data))
       .catch((err) => {
         console.error("채널 이름을 불러오는 중 오류 발생:", err);
         setMyCnName("");
       });
-  }, []);
-
-  const isLoggedIn = !!Cookies.get("accessToken");
+  }, [token]);
 
   return (
     <header className="header">
@@ -29,7 +28,7 @@ const Header = () => {
         </Link>
 
         <nav className="nav">
-          {isLoggedIn ? (
+          {!!token.accessToken ? (
             <>
               {myCnName ? (
                 <Link to={`/broadcast/${myCnName}`}>방송하기</Link>

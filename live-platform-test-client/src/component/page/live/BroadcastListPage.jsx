@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import BroadcastListElement from "../../common/viewer/BroadcastListElement";
 import GetChannelsApi from "../../../library/api/GetChannelsApi";
-import Cookies from "js-cookie";
 import BroadcastSearch from "../../common/viewer/BroadcastSearch";
+import { useSelector } from "react-redux";
 
 const BroadCastListPage = () => {
     const [nickname, setNickname] = useState(null);
     const [cnlist, setCnlist] = useState([]);
+    const token = useSelector((state) => state.token.value);
     useEffect(() => {
         console.log("BroadCastListPage mounted");
-        setNickname(Cookies.get("nickname"));
+        setNickname(token.nickname);
 
         GetChannelsApi().then((res) => {
             setCnlist(res.data["channelNames"] || []);

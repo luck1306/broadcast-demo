@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
-import Cookies from "js-cookie";
 import GetRecentlyChats from "../../../library/api/GetRecentlyChats";
 import "../../../asset/css/ChattingBox.css";
+import { useSelector } from "react-redux";
 
 const ChattingBox = ({ channelName }) => {
   const clientRef = useRef(null);
   const [inputMessage, setInputMessage] = useState("");
   const [token, setToken] = useState("");
   const [chattingList, setChattingList] = useState([]);
+  const tokenSlice = useSelector((state) => state.token.value);
   const URL_CHATTING_SERVER =
     process.env.REACT_APP_HTTPSERVER + "/chatting";
 
   useEffect(() => {
-    setToken(Cookies.get("accessToken"));
+    setToken(tokenSlice.accessToken);
     const client = new Client({
       webSocketFactory: () => new SockJS(URL_CHATTING_SERVER),
       reconnectDelay: 5000,
@@ -44,7 +45,7 @@ const ChattingBox = ({ channelName }) => {
   const sendMessage = () => {
     const destination = `/app/message/${channelName}`;
     const body = {
-      sender: Cookies.get("nickname") || "익명",
+      sender: tokenSlice.nickname || "익명",
       message: inputMessage.trim(),
     };
     if (inputMessage.trim() === "") return;

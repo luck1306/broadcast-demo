@@ -1,6 +1,25 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setTokens } from "../../redux/tokenSlice";
 
 const RootPage = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const at = Cookies.get("accessToken"),
+            rt = Cookies.get("refreshToken"),
+            nm = Cookies.get("nickname");
+        if (at && rt && nm) {
+            dispatch(
+                setTokens({
+                    accessToken: at,
+                    refreshToken: rt,
+                    nickname: nm,
+                })
+            );
+        }
+    }, []);
     return (
         <>
             <h1>MainPage</h1>
@@ -16,7 +35,7 @@ const RootPage = () => {
                 <li>방송 하기</li>
                 <li>방송 보기</li>
                 <li>방송 탐색하기</li>
-                <li>방송채널 만들기 ❌</li>
+                <li>방송채널 만들기</li>
                 <li>방송채널 검색하기</li>
                 <li>채팅</li>
             </ul>
